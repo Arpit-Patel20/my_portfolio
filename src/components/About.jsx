@@ -2,22 +2,22 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Globe, Briefcase, BookOpen, Award } from 'lucide-react';
+import { Globe, Briefcase, BookOpen, Users } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { label: 'Years in GIS', value: '5+' },
-  { label: 'Projects Done', value: '30+' },
-  { label: 'Certifications', value: '4' },
-  { label: 'Countries Mapped', value: '12' },
+  { label: 'GPA (SAIT)', value: '3.51' },
+  { label: 'Professional Roles', value: '3' },
+  { label: 'Degrees Earned', value: '2' },
+  { label: 'BGIS Club VP', value: '✓' },
 ];
 
 const cards = [
-  { icon: Globe, color: '#0D7A6F', bg: 'var(--accent-light)', title: 'GIS Expertise', body: '5+ years with ArcGIS, QGIS, and spatial databases across environmental and urban planning projects.' },
-  { icon: Briefcase, color: '#0D7A6F', bg: 'var(--accent-light)', title: 'Work Experience', body: '3+ years in professional GIS roles — government, NGOs, and private sector at regional and national scale.' },
-  { icon: BookOpen, color: '#B45309', bg: 'var(--accent-2-light)', title: 'Education', body: 'M.Sc. GIS · B.Sc. Environmental Science — trained in both technical spatial analysis and field research.' },
-  { icon: Award, color: '#B45309', bg: 'var(--accent-2-light)', title: 'Certifications', body: 'Esri ArcGIS Desktop Associate · Google Earth Engine · Remote Sensing Professional · QGIS Advanced' },
+  { icon: Globe, color: '#0D7A6F', bg: 'var(--accent-light)', title: 'GIS Expertise', body: 'BAT in Geographic Information Systems — ArcGIS Pro, QGIS, CAD, GNSS, Remote Sensing, and enterprise web GIS workflows.' },
+  { icon: Briefcase, color: '#0D7A6F', bg: 'var(--accent-light)', title: 'Professional Experience', body: 'Environmental data roles at Lupin Ltd., Farmson Pharmaceuticals, and IHSS — handling inspection datasets, ArcGIS validation, and field data collection.' },
+  { icon: BookOpen, color: '#B45309', bg: 'var(--accent-2-light)', title: 'Education', body: 'B.A.T. Geographic Information Systems (SAIT, Calgary) · M.Sc. Environmental Science & Technology (CVM University, India).' },
+  { icon: Users, color: '#B45309', bg: 'var(--accent-2-light)', title: 'Leadership', body: 'Vice-President of BGIS Club at SAIT — organizing Geospatial Industry Nights with Esri Canada, AltaLIS, Stantec, and more.' },
 ];
 
 export default function About() {
@@ -46,28 +46,23 @@ export default function About() {
   return (
     <section id="about" className="section">
       <div className="container-tight">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10 md:mb-12 px-2">
           <span className="eyebrow">About Me</span>
-          <h2 className="font-serif text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>The Story So Far</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>The Story So Far</h2>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          {/* Left — cards: equal height grid */}
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
+          {/* Left — cards */}
           <div
             ref={leftRef}
-            style={{
-              flex: 1,
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gridAutoRows: '1fr',   /* ← this makes all rows equal height */
-              gap: '16px',
-            }}
+            className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
+            style={{ gridAutoRows: '1fr' }}
           >
             {cards.map(({ icon: Icon, color, bg, title, body }) => (
               <motion.div
                 key={title}
                 whileHover={{ y: -5, boxShadow: 'var(--glass-shadow-hover)' }}
-                className="card p-5 flex flex-col gap-3"
+                className="card p-4 sm:p-5 flex flex-col gap-3"
                 style={{ height: '100%', transition: 'none' }}
               >
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
@@ -76,34 +71,34 @@ export default function About() {
                 </div>
                 <div className="flex flex-col flex-1">
                   <h3 className="font-semibold text-sm mb-1.5" style={{ color: 'var(--text)' }}>{title}</h3>
-                  <p className="text-sm leading-6" style={{ color: 'var(--text-2)' }}>{body}</p>
+                  <p className="text-xs sm:text-sm leading-6" style={{ color: 'var(--text-2)' }}>{body}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
           {/* Right — bio + stats */}
-          <div ref={rightRef} className="flex-1 space-y-6">
+          <div ref={rightRef} className="flex-1 flex flex-col justify-between gap-6">
             <div className="space-y-4">
-              <p className="text-base leading-7" style={{ color: 'var(--text-2)' }}>
-                I'm Arpit — a GIS Analyst who believes maps are more than data, they're stories. My work spans environmental monitoring, urban infrastructure, land-use planning, and disaster response across multiple countries.
+              <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
+                I'm Arpit — a GIS professional with a background in environmental science and a passion for spatial analysis. After earning my Master's in Environmental Science from CVM University, I transitioned into GIS and completed my B.A.T. in Geographic Information Systems at SAIT in Calgary.
               </p>
-              <p className="text-base leading-7" style={{ color: 'var(--text-2)' }}>
-                I care deeply about the real-world impact of spatial analysis — from helping communities prepare for floods to informing conservation decisions. Precision and purpose guide everything I build.
+              <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
+                My career interests span Municipal GIS, Environmental GIS, Emergency Management, Infrastructure Mapping, and Web GIS Applications. I believe geospatial data should drive real-world impact — from wildfire risk assessment to urban asset management.
               </p>
             </div>
 
-            {/* Stats — equal height enforced by minHeight */}
-            <div ref={statsRef} className="grid grid-cols-2 gap-4" style={{ gridAutoRows: '1fr' }}>
+            {/* Stats */}
+            <div ref={statsRef} className="grid grid-cols-2 gap-3 sm:gap-4" style={{ gridAutoRows: '1fr' }}>
               {stats.map((s) => (
                 <motion.div
                   key={s.label}
                   whileHover={{ y: -4, boxShadow: 'var(--glass-shadow-hover)' }}
                   className="card flex flex-col items-center justify-center text-center"
-                  style={{ transition: 'none', minHeight: '100px', padding: '20px 16px' }}
+                  style={{ transition: 'none', minHeight: '90px', padding: '16px 12px' }}
                 >
-                  <p className="font-serif text-[2.1rem] leading-none text-grad mb-1" style={{ fontStyle: 'italic' }}>{s.value}</p>
-                  <p className="text-xs" style={{ color: 'var(--text-3)' }}>{s.label}</p>
+                  <p className="font-serif text-[1.8rem] sm:text-[2.1rem] leading-none text-grad mb-1" style={{ fontStyle: 'italic' }}>{s.value}</p>
+                  <p className="text-[10px] sm:text-xs" style={{ color: 'var(--text-3)' }}>{s.label}</p>
                 </motion.div>
               ))}
             </div>

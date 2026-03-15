@@ -7,17 +7,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 const tools = [
   { name: 'ArcGIS Pro', pct: 92, cat: 'GIS Software' },
-  { name: 'QGIS', pct: 90, cat: 'GIS Software' },
-  { name: 'ArcGIS Online / Web', pct: 85, cat: 'Web GIS' },
-  { name: 'Google Earth Engine', pct: 80, cat: 'Remote Sensing' },
-  { name: 'ENVI / ERDAS Imagine', pct: 74, cat: 'Image Analysis' },
-  { name: 'Python — arcpy / geopandas', pct: 78, cat: 'Programming' },
-  { name: 'R — sf / tmap / ggplot2', pct: 70, cat: 'Programming' },
-  { name: 'PostGIS / PostgreSQL', pct: 72, cat: 'Database' },
-  { name: 'AutoCAD / Civil 3D', pct: 65, cat: 'CAD' },
-  { name: 'Mapbox / Leaflet.js', pct: 68, cat: 'Web Mapping' },
-  { name: 'Survey123 / Collector', pct: 88, cat: 'Field GIS' },
-  { name: 'Pix4D / DJI Terra', pct: 74, cat: 'UAV / Drone' },
+  { name: 'QGIS', pct: 88, cat: 'GIS Software' },
+  { name: 'ArcGIS Online', pct: 85, cat: 'Web GIS' },
+  { name: 'ModelBuilder', pct: 90, cat: 'Automation' },
+  { name: 'Survey123 / Field Maps', pct: 88, cat: 'Field GIS' },
+  { name: 'Remote Sensing (RS)', pct: 78, cat: 'Remote Sensing' },
+  { name: 'AutoCAD / Civil 3D', pct: 72, cat: 'CAD' },
+  { name: 'GNSS / GPS', pct: 80, cat: 'Field GIS' },
+  { name: 'GIS Programming', pct: 70, cat: 'Programming' },
+  { name: 'Cartography', pct: 88, cat: 'Cartography' },
+  { name: 'Data Capture & QA/QC', pct: 90, cat: 'Data Mgmt' },
+  { name: 'Enterprise & Web GIS', pct: 78, cat: 'Web GIS' },
 ];
 
 export default function Skills() {
@@ -52,22 +52,22 @@ export default function Skills() {
   function BarItem({ tool, idx }) {
     const catColors = {
       'GIS Software': 'var(--accent)', 'Web GIS': 'var(--accent)',
-      'Remote Sensing': '#7c3aed', 'Image Analysis': '#7c3aed',
-      'Programming': 'var(--accent-2)', 'Database': 'var(--accent-2)',
-      'CAD': '#64748b', 'Web Mapping': '#64748b',
-      'Field GIS': 'var(--accent)', 'UAV / Drone': '#7c3aed',
+      'Remote Sensing': '#7c3aed', 'Automation': '#7c3aed',
+      'Programming': 'var(--accent-2)', 'Data Mgmt': 'var(--accent-2)',
+      'CAD': '#64748b', 'Cartography': '#64748b',
+      'Field GIS': 'var(--accent)',
     };
     const fillColor = catColors[tool.cat] || 'var(--accent)';
 
     return (
       <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{tool.name}</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-xs sm:text-sm font-medium" style={{ color: 'var(--text)' }}>{tool.name}</span>
+            <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-medium"
               style={{ background: 'var(--accent-light)', color: 'var(--accent)' }}>{tool.cat}</span>
           </div>
-          <span className="text-xs tabular-nums font-semibold" style={{ color: 'var(--text-3)' }}>{tool.pct}%</span>
+          <span className="text-[10px] sm:text-xs tabular-nums font-semibold" style={{ color: 'var(--text-3)' }}>{tool.pct}%</span>
         </div>
         <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.08)' }}>
           <div
@@ -83,15 +83,15 @@ export default function Skills() {
   return (
     <section id="skills" ref={sectionRef} className="section">
       <div className="container-tight">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10 md:mb-12 px-2">
           <span className="eyebrow">Toolkit</span>
-          <h2 className="font-serif text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>GIS Tools & Skills</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>GIS Tools & Skills</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div ref={leftRef} whileHover={{}} className="card p-7 space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <motion.div ref={leftRef} whileHover={{}} className="card p-5 sm:p-7 space-y-4 sm:space-y-5">
             {tools.slice(0, half).map((t, i) => <BarItem key={t.name} tool={t} idx={i} />)}
           </motion.div>
-          <motion.div ref={rightRef} whileHover={{}} className="card p-7 space-y-5">
+          <motion.div ref={rightRef} whileHover={{}} className="card p-5 sm:p-7 space-y-4 sm:space-y-5">
             {tools.slice(half).map((t, i) => <BarItem key={t.name} tool={t} idx={i + half} />)}
           </motion.div>
         </div>

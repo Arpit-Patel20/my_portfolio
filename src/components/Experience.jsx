@@ -8,36 +8,46 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    role: 'Senior GIS Analyst',
-    org: 'National Geospatial Agency',
-    period: '2022 – Present',
-    location: 'New York, USA',
+    role: 'Trainee Officer (Environmental)',
+    org: 'Lupin Ltd.',
+    period: 'Nov 2024 – Aug 2025',
+    location: 'India',
     points: [
-      'Led large-scale spatial analysis for smart city planning using ArcGIS Pro and Python automation.',
-      'Built geoprocessing pipelines that cut manual effort by 60% across the department.',
-      'Produced authoritative cartographic outputs used in federal policy briefs.',
+      'Maintained and organized structured environmental inspection datasets and documentation for audits and compliance reporting.',
+      'Led digitization initiatives improving data tracking and documentation efficiency by 20%.',
+      'Supported analysis of environmental monitoring records to ensure reporting accuracy.',
     ],
   },
   {
-    role: 'GIS Specialist',
-    org: 'EcoMap Conservation',
-    period: '2020 – 2022',
-    location: 'Remote / Field (6 regions)',
+    role: 'Chemist / Supervisor',
+    org: 'Farmson Pharmaceuticals',
+    period: 'Jul 2023 – Oct 2024',
+    location: 'India',
     points: [
-      'Conducted GPS field surveys across 6 biodiversity hotspots and built spatial databases.',
-      'Deployed public-facing interactive web maps using Leaflet.js and Mapbox.',
-      'Managed the organisation\'s full spatial data infrastructure and metadata standards.',
+      'Collected, recorded, and validated environmental monitoring data (air, water, treatment systems) ensuring data accuracy.',
+      'Managed organized datasets supporting environmental compliance under strict timelines.',
+      'Maintained detailed documentation used for audits and operational reporting.',
     ],
   },
   {
-    role: 'GIS Analyst — Intern',
-    org: 'Regional Urban Planning Authority',
-    period: '2019 – 2020',
-    location: 'Boston, USA',
+    role: 'Project Assistant',
+    org: 'IHSS',
+    period: 'Jan 2023 – Apr 2023',
+    location: 'India',
     points: [
-      'Assisted in reclassifying 3,000+ parcels for a major land-use update project.',
-      'Produced thematic maps for official city planning documents and public presentations.',
-      'Applied supervised classification on Landsat imagery using ENVI for land-cover mapping.',
+      'Collected field environmental data and performed spatial validation using ArcGIS, improving dataset accuracy by 20%.',
+      'Organized environmental inspection evidence files and structured documentation for assessments.',
+    ],
+  },
+  {
+    role: 'Vice-President (Co-Curricular)',
+    org: 'BGIS Club, SAIT',
+    period: 'Sep 2025 – Present',
+    location: 'Calgary, Alberta',
+    points: [
+      'Collaborated with a team of 5 executives to secure financing and lead the club.',
+      'Organized Geospatial Industry Night with sponsors including Esri Canada, AltaLIS, and Stantec.',
+      'Designed promotional materials, coordinated logistics, and engaged with industry professionals.',
     ],
   },
 ];
@@ -51,8 +61,8 @@ export default function Experience() {
       itemRefs.current.forEach((el, i) => {
         if (!el) return;
         gsap.fromTo(el,
-          { x: i % 2 === 0 ? -56 : 56, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
             scrollTrigger: { trigger: el, start: 'top 83%' } }
         );
       });
@@ -63,9 +73,9 @@ export default function Experience() {
   return (
     <section id="experience" ref={sectionRef} className="section">
       <div className="container-tight">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10 md:mb-12 px-2">
           <span className="eyebrow">Work History</span>
-          <h2 className="font-serif text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>Experience</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>Experience</h2>
         </div>
 
         <div className="relative">
@@ -73,7 +83,7 @@ export default function Experience() {
           <div className="hidden md:block absolute left-1/2 -translate-x-px top-0 bottom-0 w-px"
             style={{ background: 'linear-gradient(to bottom, transparent, rgba(13,122,111,0.3) 20%, rgba(13,122,111,0.3) 80%, transparent)' }} />
 
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             {experiences.map((exp, i) => {
               const isLeft = i % 2 === 0;
               return (
@@ -86,26 +96,26 @@ export default function Experience() {
                   <div className={`md:w-[calc(50%-28px)] ${isLeft ? 'md:pr-10' : 'md:pl-10'}`}>
                     <motion.div
                       whileHover={{ y: -4, boxShadow: 'var(--glass-shadow-hover)' }}
-                      className="card p-6"
+                      className="card p-5 sm:p-6"
                       style={{ transition: 'none' }}
                     >
-                      <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                        <div>
-                          <h3 className="font-semibold text-base" style={{ color: 'var(--text)' }}>{exp.role}</h3>
-                          <p className="text-sm font-medium" style={{ color: 'var(--accent)' }}>{exp.org}</p>
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                        <div className="min-w-0">
+                          <h3 className="font-semibold text-sm sm:text-base" style={{ color: 'var(--text)' }}>{exp.role}</h3>
+                          <p className="text-xs sm:text-sm font-medium" style={{ color: 'var(--accent)' }}>{exp.org}</p>
                         </div>
-                        <span className="text-xs px-2.5 py-1 rounded-full glass font-medium" style={{ color: 'var(--text-3)' }}>
+                        <span className="text-[10px] sm:text-xs px-2.5 py-1 rounded-full glass font-medium shrink-0" style={{ color: 'var(--text-3)' }}>
                           {exp.period}
                         </span>
                       </div>
                       <div className="flex items-center gap-1 mb-3">
                         <MapPin size={11} style={{ color: 'var(--text-4)' }} />
-                        <span className="text-xs" style={{ color: 'var(--text-4)' }}>{exp.location}</span>
+                        <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-4)' }}>{exp.location}</span>
                       </div>
                       <ul className="space-y-2">
                         {exp.points.map((pt, pi) => (
-                          <li key={pi} className="flex gap-2 text-sm leading-6" style={{ color: 'var(--text-2)' }}>
-                            <span className="flex-shrink-0 w-1 h-1 mt-2 rounded-full" style={{ background: 'var(--accent)' }} />
+                          <li key={pi} className="flex gap-2 text-xs sm:text-sm leading-6" style={{ color: 'var(--text-2)' }}>
+                            <span className="flex-shrink-0 w-1 h-1 mt-2.5 rounded-full" style={{ background: 'var(--accent)' }} />
                             {pt}
                           </li>
                         ))}

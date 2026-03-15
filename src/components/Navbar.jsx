@@ -33,13 +33,13 @@ export default function Navbar({ onNavigate }) {
         <div
           style={{
             borderRadius: '18px',
-            background: scrolled ? 'rgba(255,255,255,0.82)' : 'rgba(255,255,255,0.28)',
-            backdropFilter: 'blur(32px) saturate(220%) brightness(106%)',
-            WebkitBackdropFilter: 'blur(32px) saturate(220%) brightness(106%)',
-            border: scrolled ? '1px solid rgba(255,255,255,0.95)' : '1px solid rgba(255,255,255,0.55)',
+            background: scrolled ? 'rgba(255,255,255,0.30)' : 'rgba(255,255,255,0.12)',
+            backdropFilter: 'blur(48px) saturate(220%) brightness(108%)',
+            WebkitBackdropFilter: 'blur(48px) saturate(220%) brightness(108%)',
+            border: scrolled ? '1px solid rgba(255,255,255,0.50)' : '1px solid rgba(255,255,255,0.30)',
             boxShadow: scrolled
-              ? '0 8px 32px rgba(13,122,111,0.10), 0 1px 4px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,1)'
-              : '0 2px 12px rgba(13,122,111,0.07), inset 0 1px 0 rgba(255,255,255,0.7)',
+              ? '0 4px 28px rgba(13,122,111,0.08), 0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.55)'
+              : '0 2px 12px rgba(13,122,111,0.04), inset 0 1px 0 rgba(255,255,255,0.35)',
             transition: 'all 0.45s cubic-bezier(0.16,1,0.3,1)',
           }}
           className="relative flex items-center justify-between px-5 py-3"
