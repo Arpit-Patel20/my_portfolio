@@ -12,7 +12,7 @@ const tools = [
   { name: 'ModelBuilder', pct: 90, cat: 'Automation' },
   { name: 'Survey123 / Field Maps', pct: 88, cat: 'Field GIS' },
   { name: 'Remote Sensing (RS)', pct: 78, cat: 'Remote Sensing' },
-  { name: 'AutoCAD / Civil 3D', pct: 72, cat: 'CAD' },
+  { name: 'ArcGIS Experience Builder', pct: 78, cat: 'Web GIS' },
   { name: 'GNSS / GPS', pct: 80, cat: 'Field GIS' },
   { name: 'GIS Programming', pct: 70, cat: 'Programming' },
   { name: 'Cartography', pct: 88, cat: 'Cartography' },

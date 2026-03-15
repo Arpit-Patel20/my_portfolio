@@ -6,6 +6,7 @@ import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
+import StoryMaps from './components/StoryMaps';
 import Footer from './components/Footer';
 import ProjectsPage from './pages/ProjectsPage';
 
@@ -33,7 +34,7 @@ function CursorGlow() {
     <div ref={dotRef} aria-hidden style={{
       position: 'fixed', top: 0, left: 0, width: 400, height: 400, borderRadius: '50%',
       pointerEvents: 'none', zIndex: 1,
-      background: 'radial-gradient(circle, rgba(13,122,111,0.08) 0%, transparent 70%)',
+    background: 'radial-gradient(circle, rgba(0,121,193,0.10) 0%, transparent 70%)',
     }} />
   );
 }
@@ -54,22 +55,22 @@ export default function App() {
       {/* ── Ambient blobs ── */}
       <div aria-hidden className="fixed inset-0 overflow-hidden z-0 pointer-events-none">
         <div style={{
-          position: 'absolute', top: '-12%', left: '-8%',
-          width: '62vw', height: '62vw', borderRadius: '50%', filter: 'blur(70px)',
-          background: 'radial-gradient(circle, rgba(134,239,172,0.70) 0%, rgba(52,211,153,0.45) 30%, transparent 68%)',
-          animation: 'blobDrift1 14s ease-in-out infinite alternate',
+          position: 'absolute', top: '-15%', left: '-10%',
+          width: '70vw', height: '70vw', borderRadius: '50%', filter: 'blur(100px)',
+          background: 'radial-gradient(circle, rgba(0,121,193,0.18) 0%, rgba(0,121,193,0.08) 40%, transparent 68%)',
+          animation: 'blobDrift1 16s ease-in-out infinite alternate',
         }} />
         <div style={{
-          position: 'absolute', top: '28%', right: '-14%',
-          width: '52vw', height: '52vw', borderRadius: '50%', filter: 'blur(75px)',
-          background: 'radial-gradient(circle, rgba(253,224,71,0.62) 0%, rgba(251,189,35,0.38) 35%, transparent 68%)',
-          animation: 'blobDrift2 18s ease-in-out infinite alternate',
+          position: 'absolute', top: '35%', right: '-15%',
+          width: '55vw', height: '55vw', borderRadius: '50%', filter: 'blur(120px)',
+          background: 'radial-gradient(circle, rgba(0,169,224,0.12) 0%, rgba(0,121,193,0.06) 40%, transparent 68%)',
+          animation: 'blobDrift2 20s ease-in-out infinite alternate',
         }} />
         <div style={{
-          position: 'absolute', bottom: '-10%', left: '18%',
-          width: '46vw', height: '46vw', borderRadius: '50%', filter: 'blur(70px)',
-          background: 'radial-gradient(circle, rgba(110,231,183,0.55) 0%, rgba(167,243,208,0.30) 40%, transparent 68%)',
-          animation: 'blobDrift3 22s ease-in-out infinite alternate',
+          position: 'absolute', bottom: '-10%', left: '20%',
+          width: '50vw', height: '50vw', borderRadius: '50%', filter: 'blur(90px)',
+          background: 'radial-gradient(circle, rgba(0,121,193,0.10) 0%, rgba(0,169,224,0.05) 40%, transparent 68%)',
+          animation: 'blobDrift3 24s ease-in-out infinite alternate',
         }} />
       </div>
 
@@ -83,6 +84,7 @@ export default function App() {
         <Skills />
         <Experience />
         <Projects onNavigate={setPage} />
+        <StoryMaps />
         <Contact />
         <Footer />
       </div>

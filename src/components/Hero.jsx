@@ -67,11 +67,11 @@ export default function Hero({ onNavigate }) {
           {/* Name */}
           <div>
             <h1
-              className="font-serif leading-[1.04]"
+              className="font-sans leading-[1.04] font-bold"
               style={{
-                fontStyle: "italic",
                 fontSize: "clamp(2.6rem, 7vw, 5.5rem)",
-                color: "#1A1714",
+                color: "#ffffff",
+                letterSpacing: '-0.02em',
               }}
             >
               {NAME_WORDS.map((word, i) => (
@@ -191,26 +191,24 @@ export default function Hero({ onNavigate }) {
             animate={{ rotate: 360 }}
             transition={{ repeat: Infinity, duration: 22, ease: "linear" }}
             className="absolute inset-[-18px] rounded-[2.8rem] border border-dashed"
-            style={{ borderColor: "rgba(13,122,111,0.22)" }}
+            style={{ borderColor: "rgba(0,121,193,0.25)" }}
           />
           <motion.div
             animate={{ rotate: -360 }}
             transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
             className="absolute inset-[-32px] rounded-[3.2rem] border"
             style={{
-              borderColor: "rgba(180,83,9,0.10)",
+              borderColor: "rgba(0,169,224,0.12)",
               borderStyle: "dotted",
             }}
           />
-          {/* Glow */}
           <div
-            className="absolute inset-0 rounded-[2.4rem] blur-2xl opacity-60"
+            className="absolute inset-0 rounded-[2.4rem] blur-2xl opacity-50"
             style={{
               background:
-                "radial-gradient(circle at 50% 30%, rgba(13,122,111,0.18), rgba(180,83,9,0.08) 60%, transparent 80%)",
+                "radial-gradient(circle at 50% 30%, rgba(0,121,193,0.25), rgba(0,169,224,0.10) 60%, transparent 80%)",
             }}
           />
-          {/* Photo */}
           <div
             className="relative overflow-hidden"
             style={{
@@ -218,11 +216,11 @@ export default function Hero({ onNavigate }) {
               height: "clamp(220px, 32vw, 340px)",
               borderRadius: "2.25rem",
               boxShadow:
-                "0 20px 64px rgba(13,122,111,0.16), 0 4px 20px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.9)",
-              background: "rgba(255,255,255,0.72)",
+                "0 20px 64px rgba(0,121,193,0.20), 0 4px 20px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.08)",
+              background: "rgba(7,17,31,0.80)",
               backdropFilter: "blur(24px)",
               WebkitBackdropFilter: "blur(24px)",
-              border: "1px solid rgba(255,255,255,0.88)",
+              border: "1px solid rgba(0,121,193,0.25)",
               padding: "6px",
             }}
           >
@@ -241,13 +239,11 @@ export default function Hero({ onNavigate }) {
             <div
               style={{
                 position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
+                bottom: 0, left: 0, right: 0,
                 height: "35%",
                 borderRadius: "0 0 1.9rem 1.9rem",
                 background:
-                  "linear-gradient(to top, rgba(209,250,229,0.45) 0%, transparent 100%)",
+                  "linear-gradient(to top, rgba(0,121,193,0.20) 0%, transparent 100%)",
                 pointerEvents: "none",
               }}
             />

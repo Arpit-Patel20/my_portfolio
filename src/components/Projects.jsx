@@ -9,62 +9,21 @@ gsap.registerPlugin(ScrollTrigger);
 // ── Mini SVG map thumbnails (one per project) ──────────────────────────────
 
 const ThumbFieldMaps = () => (
-  <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <defs>
-      <linearGradient id="fm-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#1c2b1c"/><stop offset="100%" stopColor="#243324"/>
-      </linearGradient>
-    </defs>
-    <rect width="200" height="130" fill="url(#fm-bg)" rx="6"/>
-    {[0,1,2,3].map(c => [0,1,2].map(r => (
-      <rect key={`${c}${r}`} x={8+c*46} y={8+r*36} width="44" height="34"
-        fill={c%2===r%2?"#2a3d2a":"#1e2e1e"} rx="2"/>
-    )))}
-    <rect x="0" y="44" width="200" height="3" fill="#3d5a3d" opacity="0.9"/>
-    <rect x="0" y="80" width="200" height="3" fill="#3d5a3d" opacity="0.9"/>
-    <rect x="56" y="0" width="3" height="130" fill="#3d5a3d" opacity="0.9"/>
-    <rect x="102" y="0" width="3" height="130" fill="#3d5a3d" opacity="0.9"/>
-    <rect x="148" y="0" width="3" height="130" fill="#3d5a3d" opacity="0.9"/>
-    <path d="M 10 110 Q 50 95 90 80 Q 130 62 170 72" fill="none" stroke="#ff6b35" strokeWidth="1.8" strokeDasharray="5,3" opacity="0.9"/>
-    {[[30,90],[80,90],[130,90],[170,90]].map(([x,y],i) => (
-      <g key={i}><circle cx={x} cy={y} r="5" fill="#26a69a"/><text x={x} y={y+3} textAnchor="middle" fontSize="5" fill="white" fontWeight="bold">B</text></g>
-    ))}
-    {[[25,25],[72,20],[118,28],[165,22]].map(([x,y],i) => (
-      <g key={i}><circle cx={x} cy={y} r="6" fill="#1b5e20" opacity="0.8"/><circle cx={x} cy={y} r="3.5" fill="#43a047"/></g>
-    ))}
-    <path d="M 0 80 L 200 80" stroke="#4fc3f7" strokeWidth="1" strokeDasharray="8,4" opacity="0.6"/>
-    <rect x="4" y="112" width="85" height="14" rx="3" fill="rgba(0,0,0,0.55)"/>
-    <text x="9" y="122" fontSize="7.5" fill="#b2dfdb" fontFamily="monospace">17 Ave SW · Calgary</text>
-  </svg>
+  <img
+    src={`${import.meta.env.BASE_URL}assets/image.png`}
+    alt="GIS Field Survey"
+    className="w-full h-full object-cover"
+    style={{ aspectRatio: '200/130' }}
+  />
 );
 
 const ThumbATS = () => (
-  <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <defs>
-      <linearGradient id="ats-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#fdf8f0"/><stop offset="100%" stopColor="#f5ede0"/>
-      </linearGradient>
-      <pattern id="ats-g" x="0" y="0" width="32" height="26" patternUnits="userSpaceOnUse">
-        <path d="M 32 0 L 0 0 0 26" fill="none" stroke="#c4a882" strokeWidth="0.5"/>
-      </pattern>
-    </defs>
-    <rect width="200" height="130" fill="url(#ats-bg)" rx="6"/>
-    <rect width="200" height="130" fill="url(#ats-g)" opacity="0.6"/>
-    {[0,1,2,3,4,5].map(c => [0,1,2,3].map(r => (
-      <rect key={`${c}${r}`} x={6+c*31} y={6+r*26} width="30" height="24" fill="none" stroke="#8d6e63" strokeWidth="1.2" strokeDasharray="3,2"/>
-    )))}
-    {[36,35,34,33,32,31,25,26,27,28,29,30].map((n,i) => (
-      <text key={n} x={21+(i%6)*31} y={21+Math.floor(i/6)*26} textAnchor="middle" fontSize="8" fill="#5d4037" fontWeight="500" fontFamily="monospace">{n}</text>
-    ))}
-    <path d="M 36 6 Q 42 20 38 40 Q 34 60 36 78 Q 38 96 32 120" fill="none" stroke="#5c9bd1" strokeWidth="3.5" opacity="0.65"/>
-    <line x1="6" y1="32" x2="194" y2="32" stroke="#795548" strokeWidth="1.5"/>
-    <line x1="6" y1="84" x2="194" y2="84" stroke="#795548" strokeWidth="1.5"/>
-    <line x1="68" y1="6" x2="68" y2="124" stroke="#795548" strokeWidth="1.5"/>
-    <rect x="6" y="6" width="60" height="50" fill="none" stroke="#e53935" strokeWidth="1.5" strokeDasharray="5,3" opacity="0.8"/>
-    <polygon points="21,14 23,19 28,19 24,22 26,27 21,24 16,27 18,22 14,19 19,19" fill="#e53935" opacity="0.9"/>
-    <rect x="4" y="113" width="102" height="13" rx="3" fill="rgba(255,248,230,0.9)" stroke="#8d6e63" strokeWidth="0.5"/>
-    <text x="9" y="122" fontSize="7.5" fill="#4e342e" fontFamily="monospace">Twp 21 · Rge 25 · W4M</text>
-  </svg>
+  <img
+    src={`${import.meta.env.BASE_URL}assets/image copy.png`}
+    alt="ATS NTS Spatial Referencing"
+    className="w-full h-full object-cover"
+    style={{ aspectRatio: '200/130' }}
+  />
 );
 
 const ThumbModelBuilder = () => (
@@ -107,37 +66,12 @@ const ThumbModelBuilder = () => (
 );
 
 const ThumbLandCover = () => (
-  <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <defs>
-      <linearGradient id="lc-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#f1f8e9"/><stop offset="100%" stopColor="#e8f5e9"/>
-      </linearGradient>
-    </defs>
-    <rect width="200" height="130" fill="url(#lc-bg)" rx="6"/>
-    <polygon points="8,8 90,10 86,55 70,75 50,80 20,70 8,50" fill="#a5d6a7" stroke="#66bb6a" strokeWidth="0.8"/>
-    <polygon points="95,10 175,8 185,40 180,75 155,80 120,75 105,55 108,28" fill="#c8e6c9" stroke="#81c784" strokeWidth="0.8"/>
-    <polygon points="8,55 45,80 55,110 35,125 8,124" fill="#dcedc8" stroke="#aed581" strokeWidth="0.8"/>
-    <polygon points="50,80 90,74 100,95 90,125 55,126 42,112" fill="#b9f6ca" stroke="#69f0ae" strokeWidth="0.6"/>
-    <polygon points="105,75 160,85 175,110 155,125 115,128 100,110" fill="#a5d6a7" stroke="#66bb6a" strokeWidth="0.8"/>
-    <polygon points="14,60 32,68 28,95 10,88" fill="#2e7d32" stroke="#1b5e20" strokeWidth="0.8" opacity="0.75"/>
-    <polygon points="72,36 94,34 100,52 80,56 66,46" fill="#388e3c" stroke="#2e7d32" strokeWidth="0.8" opacity="0.75"/>
-    <polygon points="42,22 66,18 70,42 50,46 36,36" fill="#cfd8dc" stroke="#b0bec5" strokeWidth="0.8" opacity="0.8"/>
-    <polygon points="118,24 148,22 152,46 126,50 112,38" fill="#b0bec5" stroke="#90a4ae" strokeWidth="0.8" opacity="0.8"/>
-    <path d="M 8 40 Q 50 44 90 38 Q 130 32 170 40" fill="none" stroke="#42a5f5" strokeWidth="2" opacity="0.7"/>
-    {[[48,32],[95,82],[138,32]].map(([x,y],i) => (
-      <g key={i}>
-        <rect x={x-9} y={y-7} width="18" height="14" rx="2" fill="#e53935" opacity="0.85" stroke="#b71c1c" strokeWidth="0.8"/>
-        <text x={x} y={y+3} textAnchor="middle" fontSize="7" fill="white" fontWeight="bold">D</text>
-      </g>
-    ))}
-    <rect x="0" y="116" width="200" height="14" fill="rgba(249,251,231,0.95)"/>
-    {[["#a5d6a7","Agri"],["#2e7d32","Natural"],["#cfd8dc","Dev"],["#e53935","Proposed"]].map(([c,l],i)=>(
-      <g key={l}>
-        <rect x={6+i*48} y={119} width="10" height="8" rx="1.5" fill={c}/>
-        <text x={19+i*48} y={126} fontSize="6.5" fill="#455a64" fontFamily="sans-serif">{l}</text>
-      </g>
-    ))}
-  </svg>
+  <img
+    src={`${import.meta.env.BASE_URL}assets/image copy 3.png`}
+    alt="Land Cover Map"
+    className="w-full h-full object-cover"
+    style={{ aspectRatio: '200/130' }}
+  />
 );
 
 const PROJECTS = [
@@ -194,11 +128,11 @@ function ProjectCard({ p, index, onNavigate, cardRef }) {
       <div
         className="relative z-10 w-full rounded-[26px] overflow-hidden flex flex-col md:flex-row"
         style={{
-          background: 'rgba(255,255,255,0.20)',
-          WebkitBackdropFilter: 'blur(40px) saturate(220%) brightness(108%)',
-          backdropFilter: 'blur(40px) saturate(220%) brightness(108%)',
-          boxShadow: `inset 0 1px 0 rgba(255,255,255,0.50), 0 4px 24px ${p.color}08`,
-          border: '1px solid rgba(255,255,255,0.40)',
+          background: 'rgba(255,255,255,0.04)',
+          WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+          backdropFilter: 'blur(24px) saturate(160%)',
+          boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.30)`,
+          border: '1px solid rgba(0,121,193,0.18)',
         }}
       >
         {/* Hover spotlight */}

@@ -7,6 +7,7 @@ const links = [
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
+  { label: 'StoryMaps', href: '#storymaps' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -33,13 +34,13 @@ export default function Navbar({ onNavigate }) {
         <div
           style={{
             borderRadius: '18px',
-            background: scrolled ? 'rgba(255,255,255,0.30)' : 'rgba(255,255,255,0.12)',
-            backdropFilter: 'blur(48px) saturate(220%) brightness(108%)',
-            WebkitBackdropFilter: 'blur(48px) saturate(220%) brightness(108%)',
-            border: scrolled ? '1px solid rgba(255,255,255,0.50)' : '1px solid rgba(255,255,255,0.30)',
+            background: scrolled ? 'rgba(7,17,31,0.88)' : 'rgba(7,17,31,0.50)',
+            backdropFilter: 'blur(32px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(32px) saturate(180%)',
+            border: scrolled ? '1px solid rgba(0,121,193,0.30)' : '1px solid rgba(255,255,255,0.08)',
             boxShadow: scrolled
-              ? '0 4px 28px rgba(13,122,111,0.08), 0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.55)'
-              : '0 2px 12px rgba(13,122,111,0.04), inset 0 1px 0 rgba(255,255,255,0.35)',
+              ? '0 4px 28px rgba(0,0,0,0.40), 0 1px 3px rgba(0,0,0,0.25)'
+              : '0 2px 12px rgba(0,0,0,0.20)',
             transition: 'all 0.45s cubic-bezier(0.16,1,0.3,1)',
           }}
           className="relative flex items-center justify-between px-5 py-3"
@@ -52,7 +53,7 @@ export default function Navbar({ onNavigate }) {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5 z-10">
             <div className="relative w-8 h-8 rounded-xl flex items-center justify-center overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #0D7A6F, #1a9e90)' }}>
+              style={{ background: 'linear-gradient(135deg, #0079C1, #00A9E0)' }}>
               <span className="font-bold text-white text-sm">A</span>
               <div className="absolute inset-0 flex items-start justify-center">
                 <div className="w-full h-1/2 rounded-t-xl" style={{ background: 'rgba(255,255,255,0.15)' }} />

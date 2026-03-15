@@ -14,10 +14,36 @@ const stats = [
 ];
 
 const cards = [
-  { icon: Globe, color: '#0D7A6F', bg: 'var(--accent-light)', title: 'GIS Expertise', body: 'BAT in Geographic Information Systems — ArcGIS Pro, QGIS, CAD, GNSS, Remote Sensing, and enterprise web GIS workflows.' },
-  { icon: Briefcase, color: '#0D7A6F', bg: 'var(--accent-light)', title: 'Professional Experience', body: 'Environmental data roles at Lupin Ltd., Farmson Pharmaceuticals, and IHSS — handling inspection datasets, ArcGIS validation, and field data collection.' },
-  { icon: BookOpen, color: '#B45309', bg: 'var(--accent-2-light)', title: 'Education', body: 'B.A.T. Geographic Information Systems (SAIT, Calgary) · M.Sc. Environmental Science & Technology (CVM University, India).' },
-  { icon: Users, color: '#B45309', bg: 'var(--accent-2-light)', title: 'Leadership', body: 'Vice-President of BGIS Club at SAIT — organizing Geospatial Industry Nights with Esri Canada, AltaLIS, Stantec, and more.' },
+  { icon: Globe,    color: '#0079C1', bg: 'var(--accent-light)',   title: 'GIS Expertise',          body: (
+    <><span style={{opacity:0.75, fontSize:'0.8rem'}}>Specialized training in Geographic Information Systems with hands-on experience in:</span>
+    <ul style={{marginTop:'8px', paddingLeft:'1.1em', lineHeight:'1.9', fontSize:'0.8rem', listStyleType:'disc'}}>
+      <li>ArcGIS Pro &amp; ArcGIS Online</li>
+      <li>Spatial Analysis &amp; Geodatabases</li>
+      <li>Remote Sensing &amp; Satellite Imagery</li>
+      <li>GNSS &amp; Field Data Collection</li>
+      <li>Web GIS &amp; Interactive Mapping</li>
+      <li>Python Automation (ArcPy) &amp; FME</li>
+    </ul></>
+  )},
+  { icon: Briefcase, color: '#0079C1', bg: 'var(--accent-light)', title: 'Professional Experience', body: (
+    <div style={{fontSize:'0.8rem', lineHeight:'1.75'}}>
+      Environmental and data-focused roles at Lupin Ltd., Farmson Pharmaceuticals, and IHSS — developing analytical skills that directly support geospatial workflows.
+    </div>
+  )},
+  { icon: BookOpen, color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Education', body: (
+    <>
+      <div style={{marginBottom:'8px'}}>
+        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Bachelor of Applied Technology – GIS</div>
+        <div style={{opacity:0.7, fontSize:'0.75rem'}}>Southern Alberta Institute of Technology (SAIT), Calgary</div>
+      </div>
+      <div style={{marginBottom:'8px'}}>
+        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Master of Science – Environmental Science &amp; Technology</div>
+        <div style={{opacity:0.7, fontSize:'0.75rem'}}>CVM University, India</div>
+      </div>
+      <div style={{opacity:0.65, fontSize:'0.75rem', marginTop:'6px'}}>Academic focus: spatial analysis, geodatabases, cartography, remote sensing, and geospatial automation.</div>
+    </>
+  )},
+  { icon: Users,    color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Leadership',              body: 'Vice-President of BGIS Club at SAIT — organizing Geospatial Industry Nights with Esri Canada, AltaLIS, Stantec, and more.' },
 ];
 
 export default function About() {
@@ -71,7 +97,7 @@ export default function About() {
                 </div>
                 <div className="flex flex-col flex-1">
                   <h3 className="font-semibold text-sm mb-1.5" style={{ color: 'var(--text)' }}>{title}</h3>
-                  <p className="text-xs sm:text-sm leading-6" style={{ color: 'var(--text-2)' }}>{body}</p>
+                  <div className="text-xs sm:text-sm leading-6" style={{ color: 'var(--text-2)' }}>{body}</div>
                 </div>
               </motion.div>
             ))}
@@ -81,10 +107,13 @@ export default function About() {
           <div ref={rightRef} className="flex-1 flex flex-col justify-between gap-6">
             <div className="space-y-4">
               <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
-                I'm Arpit — a GIS professional with a background in environmental science and a passion for spatial analysis. After earning my Master's in Environmental Science from CVM University, I transitioned into GIS and completed my B.A.T. in Geographic Information Systems at SAIT in Calgary.
+                I'm Arpit Patel, a GIS professional with a background in environmental science and a strong interest in spatial analysis and geospatial technologies. I am currently completing my Bachelor of Applied Technology in Geographic Information Systems (BGIS) at the Southern Alberta Institute of Technology (SAIT) in Calgary.
               </p>
               <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
-                My career interests span Municipal GIS, Environmental GIS, Emergency Management, Infrastructure Mapping, and Web GIS Applications. I believe geospatial data should drive real-world impact — from wildfire risk assessment to urban asset management.
+                My work focuses on spatial data analysis, geospatial data management, and GIS application development using tools such as ArcGIS Pro, Python (ArcPy), remote sensing, and web GIS technologies. I enjoy transforming complex geographic data into meaningful insights that support urban planning, environmental management, and emergency response.
+              </p>
+              <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
+                I am particularly interested in Municipal GIS, Environmental GIS, Infrastructure Mapping, and Geospatial Automation. My goal is to apply GIS technology to solve real-world challenges — from wildfire risk assessment and spatial crime analysis to urban infrastructure planning.
               </p>
             </div>
 
