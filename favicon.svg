@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D7A6F"/>
+      <stop offset="100%" stop-color="#0a6560"/>
+    </linearGradient>
+    <linearGradient id="letter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#d4f5f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+
+  <!-- Subtle inner highlight ring -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+
+  <!-- Italic "A" in Serif style, centered -->
+  <text
+    x="32"
+    y="47"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="44"
+    font-style="italic"
+    font-weight="600"
+    fill="url(#letter)"
+  >A</text>
+
+  <!-- Tiny dot accent below — like a GIS pin -->
+  <circle cx="32" cy="56" r="2.5" fill="rgba(255,255,255,0.4)"/>
+</svg>
