@@ -99,10 +99,7 @@ export default function Navbar({ onNavigate }) {
             ))}
           </nav>
 
-          {/* CTA */}
-          <a href="#contact" className="hidden md:flex btn-primary text-xs px-5 py-2.5">
-            Hire Me
-          </a>
+
 
           {/* Mobile menu btn */}
           <motion.button
@@ -146,9 +143,7 @@ export default function Navbar({ onNavigate }) {
                 <span style={{ color: 'var(--text-4)' }}>→</span>
               </motion.a>
             ))}
-            <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-              <a href="#contact" className="btn-primary w-full justify-center text-sm">Hire Me</a>
-            </div>
+
           </motion.div>
         )}
       </AnimatePresence>
