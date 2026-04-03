@@ -132,7 +132,7 @@ export default function Hero({ onNavigate }) {
             className="flex flex-wrap gap-3"
           >
             <motion.a
-              href={`${BASE}assets/arpit_patel.pdf`}
+              href={`${BASE}assets/Arpit_Patel_GIS.pdf`}
               download
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.96 }}
