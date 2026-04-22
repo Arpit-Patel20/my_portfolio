@@ -76,8 +76,8 @@ const ThumbLandCover = () => (
 
 const ThumbCalifornia = () => (
   <img
-    src={`${import.meta.env.BASE_URL}assets/california_map.png`}
-    alt="Trouble in California – Choropleth Map"
+    src={`${import.meta.env.BASE_URL}assets/california_hunting_map.png`}
+    alt="Rifle Hunting Participation in California"
     className="w-full h-full object-cover"
     style={{ aspectRatio: '200/130' }}
   />
@@ -88,7 +88,7 @@ const PROJECTS = [
   { number: '02', title: 'ATS & NTS Spatial Referencing',        category: 'Spatial Reference', desc: 'Carseland, AB · Township 21 · 36 sections mapped', color: '#8d6e63', Thumb: ThumbATS },
   { number: '03', title: 'GIS Workflow Automation',               category: 'Automation',       desc: '12-step pipeline · 1-click execution · ArcGIS Pro', color: '#5c6bc0', Thumb: ThumbModelBuilder },
   { number: '04', title: 'Land Cover Interpretation & EIA',       category: 'Remote Sensing',   desc: 'Grande Prairie, AB · 3 cover classes · 0.5ha MMU', color: '#388e3c', Thumb: ThumbLandCover },
-  { number: '05', title: 'Trouble in California',                  category: 'Cartography',      desc: 'California · Hospital Beds per 1,000 Seniors · Natural Breaks (Jenks) · ArcGIS Pro', color: '#c0392b', Thumb: ThumbCalifornia },
+  { number: '05', title: 'Rifle Hunting Participation in California', category: 'Choropleth Mapping', desc: 'California Counties · % of Population · Natural Breaks (Jenks) · ArcGIS Pro · 2025', color: '#b5451b', Thumb: ThumbCalifornia },
 ];
 
 // ── Animated border keyframes via CSS injection ──
