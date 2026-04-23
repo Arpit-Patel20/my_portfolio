@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 
 // ─── FONT IMPORT ─────────────────────────────────────────────────────────────
@@ -48,6 +48,15 @@ const CaliforniaIllustration = () => (
   <img
     src={`${import.meta.env.BASE_URL}assets/california_hunting_map.png`}
     alt="Rifle Hunting Participation in California"
+    className="w-full h-full object-contain"
+    style={{ aspectRatio: '540/340' }}
+  />
+);
+
+const WildfireIllustration = () => (
+  <img
+    src={`${import.meta.env.BASE_URL}assets/wildfire_risk_poster.jpg`}
+    alt="Wildfire Risk Management & Emergency Response"
     className="w-full h-full object-contain"
     style={{ aspectRatio: '540/340' }}
   />
@@ -130,6 +139,21 @@ const projects = [
     Illustration: CaliforniaIllustration,
     stats: [{ val: "58", label: "Counties Mapped" }, { val: "0.95", label: "GVF Score" }, { val: "5", label: "Data Classes" }],
   },
+  {
+    number: "06",
+    title: "Wildfire Risk Management & Emergency Response",
+    subtitle: "Capstone · Multi-Criteria GIS Analysis · WebGIS",
+    category: "Capstone Project",
+    color: "#e65100",
+    accent: "#bf360c",
+    description: "Assessed wildfire risk and supported emergency response planning for Frog Lake First Nation, Alberta. Processed PlanetScope 3m multispectral imagery to produce a supervised land cover classification, then applied a weighted overlay across slope, moisture, elevation, and aspect to generate a predictive wildfire risk surface.",
+    outcome: "Delivered a full GIS decision-support system: a wildfire risk raster map (82% accuracy), an ArcGIS Network Analysis model for optimal first-responder routing, a Field Maps mobile app for real-time fire sighting collection, and an Experience Builder web application hosted on ESRI — all integrated on a single public-facing platform.",
+    challenge: "Integrating five heterogeneous environmental raster layers (land cover, slope, moisture, elevation, aspect) into a single consistent risk surface while managing coordinate system alignment and weighted overlay calibration across datasets from different government sources.",
+    impact: "Identified that 37.4% of the study area falls within Risk Level 3 (high risk), with high-risk zones clustered in forested regions. The system enhances situational awareness, improves first-responder routing, and supports safer wildfire response for an Indigenous community with limited emergency resources.",
+    tools: ["ArcGIS Pro", "PlanetScope Imagery", "ModelBuilder", "Network Analysis", "ArcGIS Field Maps", "Experience Builder", "Python", "WebGIS"],
+    Illustration: WildfireIllustration,
+    stats: [{ val: "3m", label: "Image Resolution" }, { val: "82%", label: "Model Accuracy" }, { val: "37.4%", label: "High-Risk Area" }],
+  },
 ];
 
 // ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
@@ -147,12 +171,186 @@ const StatChip = ({ val, label, color }) => (
   </div>
 );
 
+// ─── LIGHTBOX ────────────────────────────────────────────────────────────────
+const MIN_ZOOM = 0.5;
+const MAX_ZOOM = 5;
+const ZOOM_STEP = 0.25;
+
+const Lightbox = ({ src, alt, onClose }) => {
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStart = useRef(null);
+  const panAtDrag = useRef({ x: 0, y: 0 });
+
+  // Keyboard shortcuts: Escape, +, -, 0
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === '+' || e.key === '=') setZoom(z => Math.min(MAX_ZOOM, +(z + ZOOM_STEP).toFixed(2)));
+      if (e.key === '-') setZoom(z => Math.max(MIN_ZOOM, +(z - ZOOM_STEP).toFixed(2)));
+      if (e.key === '0') { setZoom(1); setPan({ x: 0, y: 0 }); }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  // Reset pan when zoom returns to 1
+  useEffect(() => { if (zoom === 1) setPan({ x: 0, y: 0 }); }, [zoom]);
+
+  // Scroll wheel zoom
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP;
+    setZoom(z => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +(z + delta).toFixed(2))));
+  };
+
+  // Drag-to-pan
+  const handleMouseDown = (e) => {
+    if (zoom <= 1) return;
+    e.preventDefault();
+    setIsDragging(true);
+    dragStart.current = { x: e.clientX, y: e.clientY };
+    panAtDrag.current = pan;
+  };
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    setPan({
+      x: panAtDrag.current.x + (e.clientX - dragStart.current.x),
+      y: panAtDrag.current.y + (e.clientY - dragStart.current.y),
+    });
+  };
+  const handleMouseUp = () => setIsDragging(false);
+
+  const zoomIn  = () => setZoom(z => Math.min(MAX_ZOOM, +(z + ZOOM_STEP).toFixed(2)));
+  const zoomOut = () => setZoom(z => Math.max(MIN_ZOOM, +(z - ZOOM_STEP).toFixed(2)));
+  const reset   = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="lightbox"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        onClick={onClose}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        className="fixed inset-0 z-[9999] flex items-center justify-center"
+        style={{ background: 'rgba(0,0,0,0.9)', backdropFilter: 'blur(10px)', cursor: isDragging ? 'grabbing' : 'default' }}
+      >
+        {/* ── Image wrapper — stops clicks from closing ── */}
+        <div
+          onClick={(e) => e.stopPropagation()}
+          onWheel={handleWheel}
+          onMouseDown={handleMouseDown}
+          style={{
+            transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
+            transition: isDragging ? 'none' : 'transform 0.2s ease',
+            cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
+            maxWidth: '90vw',
+            maxHeight: '85vh',
+            display: 'flex',
+          }}
+        >
+          <img
+            src={src}
+            alt={alt}
+            draggable={false}
+            style={{
+              maxWidth: '90vw',
+              maxHeight: '85vh',
+              objectFit: 'contain',
+              borderRadius: '16px',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+              border: '1px solid rgba(255,255,255,0.10)',
+              userSelect: 'none',
+            }}
+          />
+        </div>
+
+        {/* ── Top-right: Close ── */}
+        <button
+          onClick={onClose}
+          title="Close (Esc)"
+          className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors hover:bg-white/20"
+          style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.22)' }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+
+        {/* ── Bottom-center: Zoom toolbar ── */}
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full"
+          style={{ background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)' }}
+        >
+          {/* Zoom out */}
+          <button
+            onClick={zoomOut}
+            disabled={zoom <= MIN_ZOOM}
+            title="Zoom out (-)"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white transition-all hover:bg-white/20 disabled:opacity-30"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M8 11h6"/>
+            </svg>
+          </button>
+
+          {/* Zoom level + reset */}
+          <button
+            onClick={reset}
+            title="Reset zoom (0)"
+            className="min-w-[54px] text-center text-xs font-semibold text-white/80 hover:text-white transition-colors px-1"
+            style={{ fontFamily: "'DM Mono', monospace" }}
+          >
+            {Math.round(zoom * 100)}%
+          </button>
+
+          {/* Zoom in */}
+          <button
+            onClick={zoomIn}
+            disabled={zoom >= MAX_ZOOM}
+            title="Zoom in (+)"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white transition-all hover:bg-white/20 disabled:opacity-30"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/>
+            </svg>
+          </button>
+
+          {/* Divider */}
+          <div className="w-px h-5 bg-white/20 mx-1"/>
+
+          {/* Caption */}
+          <span className="text-[10px] text-white/40 tracking-widest uppercase hidden sm:block"
+            style={{ fontFamily: "'DM Mono', monospace" }}>
+            Scroll · Drag · Esc
+          </span>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
 const ProjectCard = ({ project, index }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [expanded, setExpanded] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState(null);
   const isEven = index % 2 === 0;
   const { number, title, subtitle, category, color, accent, description, outcome, challenge, impact, tools, Illustration, stats } = project;
+
+  // Grab the image src from the Illustration to pass to the lightbox
+  const illustrationRef = useRef(null);
+  const openLightbox = () => {
+    const img = illustrationRef.current?.querySelector('img');
+    if (img) setLightboxSrc({ src: img.src, alt: img.alt });
+  };
 
   return (
     <motion.div
@@ -175,11 +373,24 @@ const ProjectCard = ({ project, index }) => {
       <div className={`grid ${isEven ? "md:grid-cols-[1fr_1.1fr]" : "md:grid-cols-[1.1fr_1fr]"}`}>
         {/* Illustration side */}
         <div className={`${isEven ? "order-1" : "order-2 md:order-2"} p-4 md:p-6`}>
-          <motion.div whileHover={{ scale: 1.015 }} transition={{ duration: 0.3 }}
-            className="rounded-2xl overflow-hidden shadow-md border border-white/70"
-            style={{ boxShadow: `0 4px 20px ${color}20` }}>
-            <Illustration />
-          </motion.div>
+          <div className="relative group" ref={illustrationRef}>
+            <motion.div whileHover={{ scale: 1.015 }} transition={{ duration: 0.3 }}
+              className="rounded-2xl overflow-hidden shadow-md border border-white/70"
+              style={{ boxShadow: `0 4px 20px ${color}20` }}>
+              <Illustration />
+            </motion.div>
+            {/* Full-size button */}
+            <button
+              onClick={openLightbox}
+              title="View full size"
+              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              style={{ background: `${color}cc`, backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.4)', boxShadow: `0 2px 10px ${color}40` }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+              </svg>
+            </button>
+          </div>
           <div className="flex gap-2 mt-4 flex-wrap">
             {stats.map(s => <StatChip key={s.label} val={s.val} label={s.label} color={color} />)}
           </div>
@@ -249,6 +460,11 @@ const ProjectCard = ({ project, index }) => {
           </div>
         </div>
       </div>
+
+      {/* Lightbox portal */}
+      {lightboxSrc && (
+        <Lightbox src={lightboxSrc.src} alt={lightboxSrc.alt} onClose={() => setLightboxSrc(null)} />
+      )}
     </motion.div>
   );
 };
@@ -318,11 +534,11 @@ export default function ProjectsPage({ onBack }) {
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5 }}
             className="max-w-xl mx-auto text-slate-500 text-base leading-relaxed mb-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-            Five applied GIS projects spanning mobile data collection, land survey systems, geoprocessing automation, environmental impact analysis, and cartographic visualization.
+            Six applied GIS projects spanning mobile data collection, land survey systems, geoprocessing automation, environmental impact analysis, cartographic visualization, and wildfire risk management.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-wrap justify-center gap-8">
-            {[{ val: "05", label: "Projects" },{ val: "5+", label: "GIS Tools" },{ val: "4+", label: "Regions Mapped" },{ val: "100%", label: "ArcGIS Ecosystem" }].map(({ val, label }) => (
+            {[{ val: "06", label: "Projects" },{ val: "8+", label: "GIS Tools" },{ val: "4+", label: "Regions Mapped" },{ val: "100%", label: "ArcGIS Ecosystem" }].map(({ val, label }) => (
               <div key={label} className="text-center">
                 <div className="text-3xl md:text-4xl leading-none" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, color: "#0D7A6F" }}>{val}</div>
                 <div className="text-xs text-slate-400 mt-1" style={{ fontFamily: "'DM Mono', monospace" }}>{label}</div>

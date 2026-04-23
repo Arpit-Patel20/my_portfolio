@@ -83,12 +83,22 @@ const ThumbCalifornia = () => (
   />
 );
 
+const ThumbWildfire = () => (
+  <img
+    src={`${import.meta.env.BASE_URL}assets/wildfire_risk_poster.jpg`}
+    alt="Wildfire Risk Management & Emergency Response"
+    className="w-full h-full object-contain"
+    style={{ aspectRatio: '200/130' }}
+  />
+);
+
 const PROJECTS = [
   { number: '01', title: 'Field Data Collection & Asset Mapping', category: 'Mobile GIS', desc: 'Calgary · ArcGIS Field Maps · 23+ features captured', color: '#26a69a', Thumb: ThumbFieldMaps },
   { number: '02', title: 'ATS & NTS Spatial Referencing',        category: 'Spatial Reference', desc: 'Carseland, AB · Township 21 · 36 sections mapped', color: '#8d6e63', Thumb: ThumbATS },
   { number: '03', title: 'GIS Workflow Automation',               category: 'Automation',       desc: '12-step pipeline · 1-click execution · ArcGIS Pro', color: '#5c6bc0', Thumb: ThumbModelBuilder },
   { number: '04', title: 'Land Cover Interpretation & EIA',       category: 'Remote Sensing',   desc: 'Grande Prairie, AB · 3 cover classes · 0.5ha MMU', color: '#388e3c', Thumb: ThumbLandCover },
   { number: '05', title: 'Rifle Hunting Participation in California', category: 'Choropleth Mapping', desc: 'California Counties · % of Population · Natural Breaks (Jenks) · ArcGIS Pro · 2025', color: '#b5451b', Thumb: ThumbCalifornia },
+  { number: '06', title: 'Wildfire Risk Management & Emergency Response', category: 'Capstone Project', desc: 'Frog Lake First Nation, AB · PlanetScope 3m · 82% accuracy · Network Analysis · WebGIS', color: '#e65100', Thumb: ThumbWildfire },
 ];
 
 // ── Animated border keyframes and carousel responsive CSS via injection ──
@@ -124,7 +134,7 @@ const borderCSS = `
 import { useTransform } from 'framer-motion';
 
 function ProjectCarouselCard({ p, index, onNavigate, hoverRef, rotationY }) {
-  const angle = index * 72;
+  const angle = index * 60;
   const counterRotation = useTransform(rotationY, (r) => -(r + angle));
 
   return (
