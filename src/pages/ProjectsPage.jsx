@@ -44,6 +44,15 @@ const LandCoverIllustration = () => (
   />
 );
 
+const CaliforniaIllustration = () => (
+  <img
+    src={`${import.meta.env.BASE_URL}assets/california_hunting_map.png`}
+    alt="Rifle Hunting Participation in California"
+    className="w-full h-full object-contain"
+    style={{ aspectRatio: '540/340' }}
+  />
+);
+
 // ─── PROJECT DATA ─────────────────────────────────────────────────────────────
 const projects = [
   {
@@ -105,6 +114,21 @@ const projects = [
     tools: ["ArcGIS Pro", "Airphoto Interpretation", "Manual Digitization", "MMU Standards", "Impact Analysis"],
     Illustration: LandCoverIllustration,
     stats: [{ val: "3", label: "Cover Classes" }, { val: "0.5ha", label: "Min. Map Unit" }, { val: "1:40K", label: "Map Scale" }],
+  },
+  {
+    number: "05",
+    title: "Rifle Hunting Participation in California",
+    subtitle: "Cartographic Visualization · Spatial Statistics",
+    category: "Choropleth Mapping",
+    color: "#b5451b",
+    accent: "#9e3814",
+    description: "Depicted spatial patterns in rifle hunting participation across California counties. Utilized demographic data enriched via ArcGIS Pro from the Esri portal to calculate and map participation rates as a percentage of the total county population.",
+    outcome: "Produced a choropleth map using Natural Breaks classification, which was determined to best represent the data distribution with a Goodness of Variance Fit (GVF) of 0.95.",
+    challenge: "Evaluating multiple classification methods (Equal Interval, Quantile, Manual, Natural Breaks) to find the most statistically appropriate representation for skewed demographic data.",
+    impact: "Clearly visualized spatial patterns showing lower participation in urbanized coastal regions compared to higher rates in rural and mountainous areas.",
+    tools: ["ArcGIS Pro", "Cartography", "Esri Portal", "Spatial Statistics", "Choropleth Map"],
+    Illustration: CaliforniaIllustration,
+    stats: [{ val: "58", label: "Counties Mapped" }, { val: "0.95", label: "GVF Score" }, { val: "5", label: "Data Classes" }],
   },
 ];
 
@@ -294,11 +318,11 @@ export default function ProjectsPage({ onBack }) {
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5 }}
             className="max-w-xl mx-auto text-slate-500 text-base leading-relaxed mb-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-            Four applied GIS projects spanning mobile data collection, land survey systems, geoprocessing automation, and environmental impact analysis.
+            Five applied GIS projects spanning mobile data collection, land survey systems, geoprocessing automation, environmental impact analysis, and cartographic visualization.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-wrap justify-center gap-8">
-            {[{ val: "04", label: "Projects" },{ val: "5+", label: "GIS Tools" },{ val: "3+", label: "Canadian Provinces" },{ val: "100%", label: "ArcGIS Ecosystem" }].map(({ val, label }) => (
+            {[{ val: "05", label: "Projects" },{ val: "5+", label: "GIS Tools" },{ val: "4+", label: "Regions Mapped" },{ val: "100%", label: "ArcGIS Ecosystem" }].map(({ val, label }) => (
               <div key={label} className="text-center">
                 <div className="text-3xl md:text-4xl leading-none" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, color: "#0D7A6F" }}>{val}</div>
                 <div className="text-xs text-slate-400 mt-1" style={{ fontFamily: "'DM Mono', monospace" }}>{label}</div>

@@ -78,7 +78,7 @@ const ThumbCalifornia = () => (
   <img
     src={`${import.meta.env.BASE_URL}assets/california_hunting_map.png`}
     alt="Rifle Hunting Participation in California"
-    className="w-full h-full object-cover"
+    className="w-full h-full object-contain"
     style={{ aspectRatio: '200/130' }}
   />
 );
