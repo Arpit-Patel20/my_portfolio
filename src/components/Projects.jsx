@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight } from 'lucide-react';
@@ -91,52 +91,79 @@ const PROJECTS = [
   { number: '05', title: 'Rifle Hunting Participation in California', category: 'Choropleth Mapping', desc: 'California Counties · % of Population · Natural Breaks (Jenks) · ArcGIS Pro · 2025', color: '#b5451b', Thumb: ThumbCalifornia },
 ];
 
-// ── Animated border keyframes via CSS injection ──
+// ── Animated border keyframes and carousel responsive CSS via injection ──
 const borderCSS = `
 @keyframes border-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.carousel-container {
+  --tz: 250px;
+  --card-w: 260px;
+  --card-ml: -130px;
+  --card-h: 380px;
+}
+@media (min-width: 640px) {
+  .carousel-container {
+    --tz: 320px;
+    --card-w: 300px;
+    --card-ml: -150px;
+    --card-h: 400px;
+  }
+}
+@media (min-width: 1024px) {
+  .carousel-container {
+    --tz: 400px;
+    --card-w: 340px;
+    --card-ml: -170px;
+    --card-h: 420px;
+  }
+}
 `;
 
-function ProjectCard({ p, index, onNavigate, cardRef }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const isEven = index % 2 === 0;
+import { useTransform } from 'framer-motion';
 
-  function handleMouseMove({ currentTarget, clientX, clientY }) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left); mouseY.set(clientY - top);
-  }
+function ProjectCarouselCard({ p, index, onNavigate, hoverRef, rotationY }) {
+  const angle = index * 72;
+  const counterRotation = useTransform(rotationY, (r) => -(r + angle));
 
   return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onClick={() => onNavigate?.('projects')}
-      whileHover={{ y: -6, scale: 1.005 }}
-      whileTap={{ scale: 0.985 }}
-      className="group relative rounded-[28px] w-full"
-      style={{ cursor: 'pointer', padding: '2px' }}
+    <div
+      className="absolute top-0 left-1/2"
+      style={{
+        transform: `rotateY(${angle}deg) translateZ(var(--tz))`,
+        transformStyle: 'preserve-3d',
+      }}
     >
-      {/* ── Rotating conic-gradient border (metallic glow) ── */}
+      <motion.div
+        onMouseEnter={() => (hoverRef.current = true)}
+        onMouseLeave={() => (hoverRef.current = false)}
+        onClick={() => onNavigate?.('projects')}
+        whileHover={{ y: -10, scale: 1.04 }}
+        className="group relative cursor-pointer"
+        style={{
+          width: 'var(--card-w)',
+          marginLeft: 'var(--card-ml)',
+          height: 'var(--card-h)',
+          rotateY: counterRotation,
+          transformStyle: 'preserve-3d',
+          padding: '2px',
+        }}
+      >
+        {/* ── Rotating metallic glow border ── */}
       <div className="absolute inset-0 rounded-[28px] overflow-hidden z-0">
         <div
           className="absolute opacity-30 group-hover:opacity-100"
           style={{
-            inset: '-60%',
-            width: '220%',
-            height: '220%',
+            inset: '-60%', width: '220%', height: '220%',
             background: `conic-gradient(from 0deg, transparent 0%, transparent 50%, ${p.color}cc 65%, #fff 72%, ${p.color}cc 79%, transparent 90%, transparent 100%)`,
-            animation: 'border-spin 6s linear infinite',
-            transition: 'opacity 0.5s ease',
+            animation: 'border-spin 6s linear infinite', transition: 'opacity 0.5s ease',
           }}
         />
       </div>
 
       {/* ── Inner card surface ── */}
-      <div
-        className="relative z-10 w-full rounded-[26px] overflow-hidden flex flex-col md:flex-row"
+      <div className="relative z-10 w-full h-full rounded-[26px] overflow-hidden flex flex-col"
         style={{
           background: 'rgba(255,255,255,0.04)',
           WebkitBackdropFilter: 'blur(24px) saturate(160%)',
@@ -145,117 +172,78 @@ function ProjectCard({ p, index, onNavigate, cardRef }) {
           border: '1px solid rgba(0,121,193,0.18)',
         }}
       >
-        {/* Hover spotlight */}
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: useMotionTemplate`radial-gradient(500px circle at ${mouseX}px ${mouseY}px, ${p.color}12, transparent 70%)` }}
-        />
-
-        {/* ── Content side ── */}
-        <div className={`relative z-10 flex-1 p-5 sm:p-6 md:p-7 flex flex-col justify-center ${isEven ? 'md:order-1' : 'md:order-2'}`}>
-          <div>
-            <div className="flex items-center justify-between mb-4 sm:mb-5">
-              <span
-                className="text-[9px] sm:text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase px-2.5 sm:px-3 py-1 rounded-full"
-                style={{ color: p.color, background: `${p.color}14`, fontFamily: 'monospace' }}
-              >
-                {p.category}
-              </span>
-              <span className="text-xs sm:text-sm font-medium tracking-widest opacity-35" style={{ fontFamily: 'monospace' }}>
-                {p.number}
-              </span>
-            </div>
-
-            <h3
-              className="text-lg sm:text-xl md:text-2xl font-semibold leading-tight mb-2"
-              style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}
-            >
-              {p.title}
-            </h3>
-
-            <p className="text-xs sm:text-sm md:text-base leading-relaxed opacity-75 max-w-md" style={{ color: 'var(--text-2)' }}>
-              {p.desc}
-            </p>
-          </div>
-
-          <div className="mt-6 sm:mt-8 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold" style={{ color: p.color }}>
-              <span className="relative overflow-hidden">
-                Explore Case Study
-                <div
-                  className="absolute bottom-0 left-0 w-full h-[1.5px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
-                  style={{ backgroundColor: p.color }}
-                />
-              </span>
-            </div>
-            <motion.div
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border border-white/60 group-hover:bg-white transition-colors"
-              style={{ color: p.color, background: 'rgba(255,255,255,0.5)' }}
-            >
-              <motion.span
-                animate={{ x: [0, 3, 0], y: [0, -3, 0] }}
-                transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-              >
-                <ArrowUpRight size={16} />
-              </motion.span>
-            </motion.div>
+        {/* Thumbnail side (Top) */}
+        <div className="relative shrink-0 w-full h-[45%] overflow-hidden p-3 sm:p-4" style={{ background: `linear-gradient(135deg, ${p.color}08, ${p.color}04)` }}>
+          <div className="w-full h-full rounded-xl overflow-hidden shadow-lg transition-transform duration-700 group-hover:scale-105">
+             <p.Thumb />
           </div>
         </div>
 
-        {/* ── Thumbnail side ── */}
-        <div
-          className={`relative shrink-0 w-full md:w-[42%] lg:w-[44%] overflow-hidden ${isEven ? 'md:order-2' : 'md:order-1'}`}
-          style={{
-            minHeight: '180px',
-            background: `linear-gradient(135deg, ${p.color}08, ${p.color}04)`,
-            borderLeft: isEven ? `1px solid ${p.color}12` : 'none',
-            borderRight: !isEven ? `1px solid ${p.color}12` : 'none',
-          }}
-        >
-          <motion.div className="w-full h-full transition-transform duration-700 group-hover:scale-105 origin-center p-4 sm:p-5 md:p-6 flex items-center justify-center">
-            <div
-              className="w-full h-full rounded-xl overflow-hidden"
-              style={{ boxShadow: `0 12px 32px ${p.color}20, 0 4px 12px rgba(0,0,0,0.06)` }}
-            >
-              <p.Thumb />
+        {/* Content side (Bottom) */}
+        <div className="p-4 sm:p-5 flex flex-col flex-1">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+             <span className="text-[9px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase px-2 py-1 rounded-full whitespace-nowrap" style={{ color: p.color, background: `${p.color}14`, fontFamily: 'monospace' }}>
+               {p.category}
+             </span>
+             <span className="text-xs font-medium tracking-widest opacity-35" style={{ fontFamily: 'monospace' }}>
+               {p.number}
+             </span>
+          </div>
+          <h3 className="text-base sm:text-lg lg:text-xl font-semibold leading-tight mb-2 line-clamp-2" style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
+            {p.title}
+          </h3>
+          <p className="text-xs sm:text-sm leading-relaxed opacity-75 line-clamp-3" style={{ color: 'var(--text-2)' }}>
+            {p.desc}
+          </p>
+          
+          <div className="mt-auto flex items-center gap-2 pt-3 opacity-80 group-hover:opacity-100 transition-opacity">
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: p.color }}>Explore</span>
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-white/60 group-hover:bg-white transition-colors" style={{ color: p.color, background: 'rgba(255,255,255,0.5)' }}>
+               <ArrowUpRight size={14} />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
 export default function Projects({ onNavigate }) {
   const sectionRef = useRef(null);
-  const cardRefs = useRef([]);
+  const hoverRef = useRef(false);
+  const rotationY = useMotionValue(0);
 
   useEffect(() => {
-    // Inject border animation CSS
+    // Inject custom CSS
     if (!document.getElementById('border-spin-css')) {
       const style = document.createElement('style');
       style.id = 'border-spin-css';
       style.textContent = borderCSS;
       document.head.appendChild(style);
     }
-
+    
+    // Animate overall section fading in
     const ctx = gsap.context(() => {
-      cardRefs.current.forEach((el) => {
-        if (!el) return;
-        gsap.fromTo(el,
-          { y: 60, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 85%' } }
-        );
-      });
+      gsap.fromTo(sectionRef.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 85%' } }
+      );
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
+  useAnimationFrame((t, delta) => {
+    if (!hoverRef.current) {
+      // Rotate ~15 degrees per second (0.015 * delta)
+      rotationY.set(rotationY.get() - (delta * 0.012));
+    }
+  });
+
   return (
-    <section id="projects" ref={sectionRef} className="section" style={{ paddingBottom: '72px' }}>
-      <div className="container-tight" style={{ maxWidth: '1000px' }}>
-        <div className="text-center mb-12 md:mb-20 px-2">
+    <section id="projects" ref={sectionRef} className="section carousel-container" style={{ paddingBottom: '96px', overflow: 'hidden' }}>
+      <div className="container-tight" style={{ maxWidth: '1200px' }}>
+        <div className="text-center mb-16 md:mb-24 px-2 relative z-10">
           <span className="eyebrow">Portfolio</span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-4 mb-3 leading-tight" style={{ fontStyle: 'italic' }}>
             Featured Work
@@ -265,13 +253,19 @@ export default function Projects({ onNavigate }) {
           </p>
         </div>
 
-        <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 mb-10 md:mb-14">
-          {PROJECTS.map((p, i) => (
-            <ProjectCard key={p.number} p={p} index={i} onNavigate={onNavigate} cardRef={el => (cardRefs.current[i] = el)} />
-          ))}
+        {/* ── 3D Carousel Stage ── */}
+        <div className="relative w-full mx-auto" style={{ perspective: '1200px', height: 'var(--card-h)', marginBottom: '80px' }}>
+          <motion.div
+            className="w-full h-full relative"
+            style={{ rotateY: rotationY, transformStyle: 'preserve-3d' }}
+          >
+            {PROJECTS.map((p, i) => (
+              <ProjectCarouselCard key={p.number} p={p} index={i} onNavigate={onNavigate} hoverRef={hoverRef} rotationY={rotationY} />
+            ))}
+          </motion.div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center relative z-10">
           <motion.button onClick={() => onNavigate?.('projects')}
             whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}
             className="btn-primary gap-2 mx-auto">
