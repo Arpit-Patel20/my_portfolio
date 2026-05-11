@@ -7,7 +7,7 @@ import { Globe, Briefcase, BookOpen, Users } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { label: 'GPA (SAIT)', value: '3.51' },
+  { label: 'GPA (SAIT)', value: '3.65' },
   { label: 'Professional Roles', value: '3' },
   { label: 'Degrees Earned', value: '2' },
   { label: 'BGIS Club VP', value: '✓' },
