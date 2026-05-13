@@ -42,7 +42,7 @@ const experiences = [
   {
     role: 'Vice-President (Co-Curricular)',
     org: 'BGIS Club, SAIT',
-    period: 'Sep 2025 – Present',
+    period: 'Sep 2025 – Apr 2026',
     location: 'Calgary, Alberta',
     points: [
       'Collaborated with a team of 5 executives to secure financing and lead the club.',
