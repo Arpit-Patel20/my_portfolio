@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ExternalLink, Maximize2, Minimize2 } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -23,16 +23,16 @@ const STORYMAPS = [
     description:
       'A spatial statistical analysis of arson incident patterns across Chicago neighbourhoods in 2020. Using hotspot analysis and crime mapping techniques to identify high-risk spatial clusters and temporal trends.',
     tags: ['Crime Analysis', 'Hotspot Analysis', 'Spatial Statistics', 'Chicago GIS'],
-    embedUrl: 'https://arcg.is/1buzDn',
-    link: 'https://arcg.is/1buzDn',
+    thumbnailUrl: '/my_portfolio/assets/chicago_arson_map.png',
+    link: 'https://storymaps.arcgis.com/stories/cdee97a2e8904f95bf1fb9b07a061866',
   },
 ];
 
-// ── Embedded StoryMap card ────────────────────────────────────────────────────
+// ── Preview StoryMap card (no iframe — Esri blocks embedding on GitHub Pages) ──
 function StoryCard({ story, index }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
-  const [expanded, setExpanded] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
@@ -53,48 +53,91 @@ function StoryCard({ story, index }) {
         style={{ background: `linear-gradient(90deg, transparent, ${ESRI_BLUE}, ${ESRI_BLUE2}, transparent)` }}
       />
 
-      {/* Content + iframe layout */}
       <div className="flex flex-col lg:flex-row">
 
-        {/* ── iframe side ── */}
-        <div
-          className="relative shrink-0 w-full lg:w-[55%] overflow-hidden"
+        {/* ── Map thumbnail side ── */}
+        <a
+          href={story.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative shrink-0 w-full lg:w-[55%] overflow-hidden block"
           style={{
-            minHeight: expanded ? '560px' : '320px',
+            minHeight: '320px',
             borderRight: `1px solid ${CARD_BORDER}`,
-            transition: 'min-height 0.4s ease',
             background: '#050e1a',
+            cursor: 'pointer',
           }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         >
-          {/* expand toggle */}
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="absolute top-3 right-3 z-20 flex items-center gap-1.5 px-2.5 py-1.5 rounded text-[10px] font-semibold"
+          {/* Map image */}
+          <img
+            src={story.thumbnailUrl}
+            alt={`Map preview: ${story.title}`}
             style={{
-              background: 'rgba(0,121,193,0.18)',
-              color: ESRI_BLUE2,
-              border: `1px solid rgba(0,121,193,0.35)`,
-              fontFamily: FONT,
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            {expanded ? <Minimize2 size={10} /> : <Maximize2 size={10} />}
-            {expanded ? 'Collapse' : 'Expand'}
-          </button>
-
-          <iframe
-            src={story.embedUrl}
-            title={story.title}
-            allowFullScreen
-            loading="lazy"
-            className="w-full h-full"
-            style={{
-              border: 'none',
-              minHeight: expanded ? '560px' : '320px',
-              transition: 'min-height 0.4s ease',
+              width: '100%',
+              height: '100%',
+              minHeight: '320px',
+              objectFit: 'cover',
+              display: 'block',
+              transition: 'transform 0.5s ease, filter 0.4s ease',
+              transform: hovered ? 'scale(1.04)' : 'scale(1)',
+              filter: hovered ? 'brightness(0.55)' : 'brightness(0.8)',
             }}
           />
-        </div>
+
+          {/* Hover overlay */}
+          <div
+            style={{
+              position: 'absolute', inset: 0,
+              background: hovered
+                ? 'linear-gradient(135deg, rgba(0,121,193,0.45) 0%, rgba(0,169,224,0.25) 100%)'
+                : 'linear-gradient(180deg, transparent 40%, rgba(5,14,26,0.7) 100%)',
+              transition: 'background 0.4s ease',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            {/* Play/open icon — visible on hover */}
+            <div
+              style={{
+                width: 64, height: 64, borderRadius: '50%',
+                background: 'rgba(0,121,193,0.85)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 0 40px rgba(0,121,193,0.6)',
+                opacity: hovered ? 1 : 0,
+                transform: hovered ? 'scale(1)' : 'scale(0.7)',
+                transition: 'opacity 0.35s ease, transform 0.35s ease',
+              }}
+            >
+              <ExternalLink size={26} color="#fff" />
+            </div>
+          </div>
+
+          {/* Bottom label bar */}
+          <div
+            style={{
+              position: 'absolute', bottom: 0, left: 0, right: 0,
+              padding: '12px 16px',
+              background: 'linear-gradient(0deg, rgba(5,14,26,0.95) 0%, transparent 100%)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10, fontFamily: FONT, letterSpacing: '0.1em' }}>
+              CLICK TO OPEN STORYMAPS
+            </span>
+            <span
+              style={{
+                fontSize: 10, fontWeight: 700, color: ESRI_BLUE2,
+                background: 'rgba(0,121,193,0.2)',
+                border: `1px solid rgba(0,121,193,0.4)`,
+                padding: '3px 10px', borderRadius: 4, fontFamily: FONT,
+                letterSpacing: '0.08em',
+              }}
+            >
+              ↗ VIEW
+            </span>
+          </div>
+        </a>
 
         {/* ── Info side ── */}
         <div className="flex-1 p-7 md:p-10 flex flex-col justify-between" style={{ fontFamily: FONT }}>
@@ -119,10 +162,7 @@ function StoryCard({ story, index }) {
               {story.title}
             </h3>
 
-            <p
-              className="text-xs mb-6 font-medium tracking-wide"
-              style={{ color: ESRI_BLUE }}
-            >
+            <p className="text-xs mb-6 font-medium tracking-wide" style={{ color: ESRI_BLUE }}>
               {story.subtitle}
             </p>
 
