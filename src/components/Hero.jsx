@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
 import { Github, Linkedin, Download, Mail, MapPin, ArrowDown } from 'lucide-react';
-import arpitImg from "/assets/arpit.webp";
+import arpitImg from "/assets/arpit.jpg";
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -60,7 +60,7 @@ export default function Hero({ onNavigate }) {
             transition={{ duration: 0.5, delay: 0.15 }}
           >
             <span className="eyebrow text-[0.6rem] sm:text-[0.6875rem]">
-              GIS Analyst · Spatial Data Specialist
+              Production Technician Intern · GIS Analyst
             </span>
           </motion.div>
 

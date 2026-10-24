@@ -8,6 +8,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
+    role: 'Production Technician Intern',
+    org: 'Hexagon Geosystems',
+    period: 'Jun 2026 – Present',
+    location: 'Calgary, Alberta',
+    points: [
+      'Reviewed raw aerial imagery for QA/QC, performing seamline edits to ensure clean, artifact-free orthomosaic outputs.',
+      'Calculated control checks and conducted radiometry sanity checks and DEM validation to verify data accuracy and integrity.',
+      'Documented and reported QC findings and updated project metadata to maintain accurate records across production datasets.',
+      'Used HxMap to process aerial data through full ortho production pipelines.',
+    ],
+  },
+  {
     role: 'Trainee Officer (Environmental)',
     org: 'Lupin Ltd.',
     period: 'Nov 2024 – Aug 2025',

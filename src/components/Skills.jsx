@@ -7,7 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const tools = [
   { name: 'ArcGIS Pro', pct: 92, cat: 'GIS Software' },
+  { name: 'ArcMap', pct: 85, cat: 'GIS Software' },
   { name: 'QGIS', pct: 88, cat: 'GIS Software' },
+  { name: 'HxMap', pct: 80, cat: 'GIS Software' },
   { name: 'ArcGIS Online', pct: 85, cat: 'Web GIS' },
   { name: 'ModelBuilder', pct: 90, cat: 'Automation' },
   { name: 'Survey123 / Field Maps', pct: 88, cat: 'Field GIS' },
@@ -85,7 +87,7 @@ export default function Skills() {
       <div className="container-tight">
         <div className="text-center mb-10 md:mb-12 px-2">
           <span className="eyebrow">Toolkit</span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>GIS Tools & Skills</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>GIS Tools &amp; Skills</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <motion.div ref={leftRef} whileHover={{}} className="card p-5 sm:p-7 space-y-4 sm:space-y-5">
