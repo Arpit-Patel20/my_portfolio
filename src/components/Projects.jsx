@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTransform } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -101,6 +102,8 @@ const PROJECTS = [
   { number: '06', title: 'Wildfire Risk Management & Emergency Response', category: 'Capstone Project', desc: 'Frog Lake First Nation, AB · PlanetScope 3m · 82% accuracy · Network Analysis · WebGIS', color: '#e65100', Thumb: ThumbWildfire },
 ];
 
+const STEP = 360 / PROJECTS.length; // 60 degrees per card
+
 // ── Animated border keyframes and carousel responsive CSS via injection ──
 const borderCSS = `
 @keyframes border-spin {
@@ -131,10 +134,8 @@ const borderCSS = `
 }
 `;
 
-import { useTransform } from 'framer-motion';
-
 function ProjectCarouselCard({ p, index, onNavigate, hoverRef, rotationY }) {
-  const angle = index * 60;
+  const angle = index * STEP;
   const counterRotation = useTransform(rotationY, (r) => -(r + angle));
 
   return (
@@ -161,59 +162,59 @@ function ProjectCarouselCard({ p, index, onNavigate, hoverRef, rotationY }) {
         }}
       >
         {/* ── Rotating metallic glow border ── */}
-      <div className="absolute inset-0 rounded-[28px] overflow-hidden z-0">
-        <div
-          className="absolute opacity-30 group-hover:opacity-100"
-          style={{
-            inset: '-60%', width: '220%', height: '220%',
-            background: `conic-gradient(from 0deg, transparent 0%, transparent 50%, ${p.color}cc 65%, #fff 72%, ${p.color}cc 79%, transparent 90%, transparent 100%)`,
-            animation: 'border-spin 6s linear infinite', transition: 'opacity 0.5s ease',
-          }}
-        />
-      </div>
-
-      {/* ── Inner card surface ── */}
-      <div className="relative z-10 w-full h-full rounded-[26px] overflow-hidden flex flex-col"
-        style={{
-          background: 'rgba(255,255,255,0.04)',
-          WebkitBackdropFilter: 'blur(24px) saturate(160%)',
-          backdropFilter: 'blur(24px) saturate(160%)',
-          boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.30)`,
-          border: '1px solid rgba(0,121,193,0.18)',
-        }}
-      >
-        {/* Thumbnail side (Top) */}
-        <div className="relative shrink-0 w-full h-[45%] overflow-hidden p-3 sm:p-4" style={{ background: `linear-gradient(135deg, ${p.color}08, ${p.color}04)` }}>
-          <div className="w-full h-full rounded-xl overflow-hidden shadow-lg transition-transform duration-700 group-hover:scale-105">
-             <p.Thumb />
-          </div>
+        <div className="absolute inset-0 rounded-[28px] overflow-hidden z-0">
+          <div
+            className="absolute opacity-30 group-hover:opacity-100"
+            style={{
+              inset: '-60%', width: '220%', height: '220%',
+              background: `conic-gradient(from 0deg, transparent 0%, transparent 50%, ${p.color}cc 65%, #fff 72%, ${p.color}cc 79%, transparent 90%, transparent 100%)`,
+              animation: 'border-spin 6s linear infinite', transition: 'opacity 0.5s ease',
+            }}
+          />
         </div>
 
-        {/* Content side (Bottom) */}
-        <div className="p-4 sm:p-5 flex flex-col flex-1">
-          <div className="flex items-center justify-between mb-2 sm:mb-3">
-             <span className="text-[9px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase px-2 py-1 rounded-full whitespace-nowrap" style={{ color: p.color, background: `${p.color}14`, fontFamily: 'monospace' }}>
-               {p.category}
-             </span>
-             <span className="text-xs font-medium tracking-widest opacity-35" style={{ fontFamily: 'monospace' }}>
-               {p.number}
-             </span>
+        {/* ── Inner card surface ── */}
+        <div className="relative z-10 w-full h-full rounded-[26px] overflow-hidden flex flex-col"
+          style={{
+            background: 'rgba(255,255,255,0.04)',
+            WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+            backdropFilter: 'blur(24px) saturate(160%)',
+            boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.30)`,
+            border: '1px solid rgba(0,121,193,0.18)',
+          }}
+        >
+          {/* Thumbnail side (Top) */}
+          <div className="relative shrink-0 w-full h-[45%] overflow-hidden p-3 sm:p-4" style={{ background: `linear-gradient(135deg, ${p.color}08, ${p.color}04)` }}>
+            <div className="w-full h-full rounded-xl overflow-hidden shadow-lg transition-transform duration-700 group-hover:scale-105">
+               <p.Thumb />
+            </div>
           </div>
-          <h3 className="text-base sm:text-lg lg:text-xl font-semibold leading-tight mb-2 line-clamp-2" style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
-            {p.title}
-          </h3>
-          <p className="text-xs sm:text-sm leading-relaxed opacity-75 line-clamp-3" style={{ color: 'var(--text-2)' }}>
-            {p.desc}
-          </p>
-          
-          <div className="mt-auto flex items-center gap-2 pt-3 opacity-80 group-hover:opacity-100 transition-opacity">
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: p.color }}>Explore</span>
-            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-white/60 group-hover:bg-white transition-colors" style={{ color: p.color, background: 'rgba(255,255,255,0.5)' }}>
-               <ArrowUpRight size={14} />
+
+          {/* Content side (Bottom) */}
+          <div className="p-4 sm:p-5 flex flex-col flex-1">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+               <span className="text-[9px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase px-2 py-1 rounded-full whitespace-nowrap" style={{ color: p.color, background: `${p.color}14`, fontFamily: 'monospace' }}>
+                 {p.category}
+               </span>
+               <span className="text-xs font-medium tracking-widest opacity-35" style={{ fontFamily: 'monospace' }}>
+                 {p.number}
+               </span>
+            </div>
+            <h3 className="text-base sm:text-lg lg:text-xl font-semibold leading-tight mb-2 line-clamp-2" style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
+              {p.title}
+            </h3>
+            <p className="text-xs sm:text-sm leading-relaxed opacity-75 line-clamp-3" style={{ color: 'var(--text-2)' }}>
+              {p.desc}
+            </p>
+
+            <div className="mt-auto flex items-center gap-2 pt-3 opacity-80 group-hover:opacity-100 transition-opacity">
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: p.color }}>Explore</span>
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-white/60 group-hover:bg-white transition-colors" style={{ color: p.color, background: 'rgba(255,255,255,0.5)' }}>
+                 <ArrowUpRight size={14} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </motion.div>
     </div>
   );
@@ -222,7 +223,11 @@ function ProjectCarouselCard({ p, index, onNavigate, hoverRef, rotationY }) {
 export default function Projects({ onNavigate }) {
   const sectionRef = useRef(null);
   const hoverRef = useRef(false);
+  const isDragging = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartRot = useRef(0);
   const rotationY = useMotionValue(0);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   useEffect(() => {
     // Inject custom CSS
@@ -232,7 +237,7 @@ export default function Projects({ onNavigate }) {
       style.textContent = borderCSS;
       document.head.appendChild(style);
     }
-    
+
     // Animate overall section fading in
     const ctx = gsap.context(() => {
       gsap.fromTo(sectionRef.current,
@@ -243,12 +248,57 @@ export default function Projects({ onNavigate }) {
     return () => ctx.revert();
   }, []);
 
+  // Auto-rotate when not hovering or dragging
   useAnimationFrame((t, delta) => {
-    if (!hoverRef.current) {
-      // Rotate ~15 degrees per second (0.015 * delta)
+    if (!hoverRef.current && !isDragging.current) {
       rotationY.set(rotationY.get() - (delta * 0.012));
     }
+    // Track active card index from rotation
+    const raw = ((rotationY.get() % 360) + 360) % 360;
+    const idx = Math.round(raw / STEP) % PROJECTS.length;
+    setActiveIdx((PROJECTS.length - idx) % PROJECTS.length);
   });
+
+  // ── Drag handlers (mouse) ──
+  const onMouseDown = (e) => {
+    isDragging.current = true;
+    hoverRef.current = true;
+    dragStartX.current = e.clientX;
+    dragStartRot.current = rotationY.get();
+  };
+
+  const onMouseMove = (e) => {
+    if (!isDragging.current) return;
+    const delta = e.clientX - dragStartX.current;
+    rotationY.set(dragStartRot.current + delta * 0.4);
+  };
+
+  const onMouseUp = () => {
+    isDragging.current = false;
+    hoverRef.current = false;
+  };
+
+  // ── Touch handlers (mobile swipe) ──
+  const onTouchStart = (e) => {
+    isDragging.current = true;
+    dragStartX.current = e.touches[0].clientX;
+    dragStartRot.current = rotationY.get();
+  };
+
+  const onTouchMove = (e) => {
+    if (!isDragging.current) return;
+    const delta = e.touches[0].clientX - dragStartX.current;
+    rotationY.set(dragStartRot.current + delta * 0.4);
+  };
+
+  const onTouchEnd = () => {
+    isDragging.current = false;
+  };
+
+  // ── Arrow buttons ──
+  const rotateTo = (dir) => {
+    rotationY.set(rotationY.get() + dir * STEP);
+  };
 
   return (
     <section id="projects" ref={sectionRef} className="section carousel-container" style={{ paddingBottom: '96px', overflow: 'hidden' }}>
@@ -264,15 +314,56 @@ export default function Projects({ onNavigate }) {
         </div>
 
         {/* ── 3D Carousel Stage ── */}
-        <div className="relative w-full mx-auto" style={{ perspective: '1200px', height: 'var(--card-h)', marginBottom: '80px' }}>
+        <div className="relative w-full mx-auto select-none" style={{ perspective: '1200px', height: 'var(--card-h)', marginBottom: '80px' }}>
+          {/* Prev / Next arrows */}
+          <button
+            onClick={() => rotateTo(1)}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur hover:bg-white/20 transition-colors"
+            style={{ color: 'var(--text)' }}
+            aria-label="Previous project"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={() => rotateTo(-1)}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur hover:bg-white/20 transition-colors"
+            style={{ color: 'var(--text)' }}
+            aria-label="Next project"
+          >
+            <ChevronRight size={20} />
+          </button>
+
           <motion.div
-            className="w-full h-full relative"
+            className="w-full h-full relative cursor-grab active:cursor-grabbing"
             style={{ rotateY: rotationY, transformStyle: 'preserve-3d' }}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseUp}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             {PROJECTS.map((p, i) => (
               <ProjectCarouselCard key={p.number} p={p} index={i} onNavigate={onNavigate} hoverRef={hoverRef} rotationY={rotationY} />
             ))}
           </motion.div>
+        </div>
+
+        {/* ── Dot indicators ── */}
+        <div className="flex justify-center gap-2 mb-10">
+          {PROJECTS.map((p, i) => (
+            <button
+              key={i}
+              onClick={() => rotationY.set(rotationY.get() - ((activeIdx - i + PROJECTS.length) % PROJECTS.length) * STEP + ((i - activeIdx + PROJECTS.length) % PROJECTS.length) * STEP)}
+              className="w-2 h-2 rounded-full transition-all duration-300"
+              style={{
+                background: i === activeIdx ? 'var(--accent)' : 'rgba(0,0,0,0.2)',
+                transform: i === activeIdx ? 'scale(1.4)' : 'scale(1)',
+              }}
+              aria-label={`Go to project ${i + 1}`}
+            />
+          ))}
         </div>
 
         <div className="text-center relative z-10">
