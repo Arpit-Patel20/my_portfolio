@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -7,10 +7,10 @@ import { Globe, Briefcase, BookOpen, Users } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { label: 'GPA (SAIT)', value: '3.76' },
-  { label: 'Professional Roles', value: '3' },
-  { label: 'Degrees Earned', value: '2' },
-  { label: 'BGIS Club VP', value: '\u2713' },
+  { label: 'GPA (SAIT)', value: '3.76', back: 'Consistent academic excellence across GIS, spatial analysis & cartography.' },
+  { label: 'Professional Roles', value: '3', back: 'Hexagon Geosystems\nLupin Ltd.\nIHSS' },
+  { label: 'Degrees Earned', value: '2', back: 'BAT GIS — SAIT Calgary\nMSc Environmental Science — CVM University' },
+  { label: 'BGIS Club VP', value: '\u2713', back: 'Organized industry nights with Esri Canada, AltaLIS, Stantec & more.' },
 ];
 
 const cards = [
@@ -58,6 +58,7 @@ export default function About() {
   const leftRef = useRef(null);
   const rightRef = useRef(null);
   const statsRef = useRef(null);
+  const [flippedCard, setFlippedCard] = useState(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -128,15 +129,31 @@ export default function About() {
             {/* Stats */}
             <div ref={statsRef} className="grid grid-cols-2 gap-3 sm:gap-4" style={{ gridAutoRows: '1fr' }}>
               {stats.map((s) => (
-                <motion.div
+                <div
                   key={s.label}
-                  whileHover={{ y: -4, boxShadow: 'var(--glass-shadow-hover)' }}
-                  className="card flex flex-col items-center justify-center text-center"
-                  style={{ transition: 'none', minHeight: '90px', padding: '16px 12px' }}
+                  style={{ perspective: '800px', minHeight: '90px' }}
+                  onMouseEnter={() => setFlippedCard(s.label)}
+                  onMouseLeave={() => setFlippedCard(null)}
                 >
-                  <p className="font-serif text-[1.8rem] sm:text-[2.1rem] leading-none text-grad mb-1" style={{ fontStyle: 'italic' }}>{s.value}</p>
-                  <p className="text-[10px] sm:text-xs" style={{ color: 'var(--text-3)' }}>{s.label}</p>
-                </motion.div>
+                  <div style={{
+                    position: 'relative', width: '100%', minHeight: '90px',
+                    transformStyle: 'preserve-3d',
+                    transform: flippedCard === s.label ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                    transition: 'transform 0.55s cubic-bezier(0.4,0,0.2,1)',
+                  }}>
+                    {/* Front */}
+                    <div className="card flex flex-col items-center justify-center text-center"
+                      style={{ position:'absolute', inset:0, padding:'16px 12px', WebkitBackfaceVisibility:'hidden', backfaceVisibility:'hidden' }}>
+                      <p className="font-serif text-[1.8rem] sm:text-[2.1rem] leading-none text-grad mb-1" style={{ fontStyle:'italic' }}>{s.value}</p>
+                      <p className="text-[10px] sm:text-xs" style={{ color:'var(--text-3)' }}>{s.label}</p>
+                    </div>
+                    {/* Back */}
+                    <div className="card flex flex-col items-center justify-center text-center"
+                      style={{ position:'absolute', inset:0, transform:'rotateY(180deg)', padding:'10px 8px', WebkitBackfaceVisibility:'hidden', backfaceVisibility:'hidden', background:'rgba(0,121,193,0.1)', border:'1px solid rgba(0,121,193,0.25)' }}>
+                      <p style={{ fontSize:'0.68rem', lineHeight:1.6, color:'var(--text-2)', whiteSpace:'pre-line', textAlign:'center' }}>{s.back}</p>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
