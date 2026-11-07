@@ -108,8 +108,8 @@ export default function Hero({ onNavigate }) {
             className="text-sm sm:text-base md:text-lg leading-7 max-w-md"
             style={{ color: "var(--text-2)" }}
           >
-            Turning environmental and spatial data into clear, decision-ready
-            insights — from field collection to cartographic output.
+            Production-focused GIS specialist with experience in aerial imagery QC,
+            spatial analysis, and geospatial automation across the full data pipeline.
           </motion.p>
 
           {/* Location */}
