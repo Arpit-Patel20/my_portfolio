@@ -27,7 +27,7 @@ const cards = [
   )},
   { icon: Briefcase, color: '#0079C1', bg: 'var(--accent-light)', title: 'Professional Experience', body: (
     <div style={{fontSize:'0.8rem', lineHeight:'1.75'}}>
-      <div style={{fontWeight:600, marginBottom:'4px', color:'var(--text)'}}>Hexagon Geosystems \u2014 Production Technician Intern</div>
+      <div style={{fontWeight:600, marginBottom:'4px', color:'var(--text)'}}>Hexagon Geosystems — Production Technician Intern</div>
       <div style={{opacity:0.75, marginBottom:'8px'}}>Aerial imagery QA/QC, orthomosaic production, and seamline editing in a live production environment.</div>
       <div style={{opacity:0.65}}>Prior roles at Lupin Ltd., Farmson Pharmaceuticals, and IHSS built the analytical and data management foundation.</div>
     </div>
@@ -35,11 +35,11 @@ const cards = [
   { icon: BookOpen, color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Education', body: (
     <>
       <div style={{marginBottom:'8px'}}>
-        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Bachelor of Applied Technology \u2013 GIS</div>
+        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Bachelor of Applied Technology – GIS</div>
         <div style={{opacity:0.7, fontSize:'0.75rem'}}>Southern Alberta Institute of Technology (SAIT), Calgary</div>
       </div>
       <div style={{marginBottom:'8px'}}>
-        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Master of Science \u2013 Environmental Science &amp; Technology</div>
+        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Master of Science – Environmental Science &amp; Technology</div>
         <div style={{opacity:0.7, fontSize:'0.75rem'}}>CVM University, India</div>
       </div>
       <div style={{opacity:0.65, fontSize:'0.75rem', marginTop:'6px'}}>Academic focus: spatial analysis, geodatabases, cartography, remote sensing, and geospatial automation.</div>
@@ -51,7 +51,7 @@ const cards = [
       </div>
     </>
   )},
-  { icon: Users,    color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Leadership',              body: 'Vice-President of BGIS Club at SAIT \u2014 organizing Geospatial Industry Nights with Esri Canada, AltaLIS, Stantec, and more.' },
+  { icon: Users,    color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Leadership',              body: 'Vice-President of BGIS Club at SAIT — organizing Geospatial Industry Nights with Esri Canada, AltaLIS, Stantec, and more.' },
 ];
 
 export default function About() {
@@ -86,7 +86,7 @@ export default function About() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
-          {/* Left \u2014 cards */}
+          {/* Left — cards */}
           <div
             ref={leftRef}
             className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
@@ -111,7 +111,7 @@ export default function About() {
             ))}
           </div>
 
-          {/* Right \u2014 bio + stats */}
+          {/* Right — bio + stats */}
           <div ref={rightRef} className="flex-1 flex flex-col justify-between gap-6">
             <div className="space-y-4">
               <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
@@ -121,7 +121,7 @@ export default function About() {
                 My work focuses on spatial data analysis, geospatial data management, and GIS application development using tools such as ArcGIS Pro, Python (ArcPy), remote sensing, and web GIS technologies. I enjoy transforming complex geographic data into meaningful insights that support urban planning, environmental management, and emergency response.
               </p>
               <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
-                I am particularly interested in Municipal GIS, Environmental GIS, Infrastructure Mapping, and Geospatial Automation. My goal is to apply GIS technology to solve real-world challenges \u2014 from wildfire risk assessment and spatial crime analysis to urban infrastructure planning.
+                I am particularly interested in Municipal GIS, Environmental GIS, Infrastructure Mapping, and Geospatial Automation. My goal is to apply GIS technology to solve real-world challenges — from wildfire risk assessment and spatial crime analysis to urban infrastructure planning.
               </p>
             </div>
 
