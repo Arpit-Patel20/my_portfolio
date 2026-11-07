@@ -10,7 +10,7 @@ const stats = [
   { label: 'GPA (SAIT)', value: '3.76' },
   { label: 'Professional Roles', value: '3' },
   { label: 'Degrees Earned', value: '2' },
-  { label: 'BGIS Club VP', value: '✓' },
+  { label: 'BGIS Club VP', value: '\u2713' },
 ];
 
 const cards = [
@@ -27,23 +27,31 @@ const cards = [
   )},
   { icon: Briefcase, color: '#0079C1', bg: 'var(--accent-light)', title: 'Professional Experience', body: (
     <div style={{fontSize:'0.8rem', lineHeight:'1.75'}}>
-      Environmental and data-focused roles at Lupin Ltd., Farmson Pharmaceuticals, and IHSS — developing analytical skills that directly support geospatial workflows.
+      <div style={{fontWeight:600, marginBottom:'4px', color:'var(--text)'}}>Hexagon Geosystems \u2014 Production Technician Intern</div>
+      <div style={{opacity:0.75, marginBottom:'8px'}}>Aerial imagery QA/QC, orthomosaic production, and seamline editing in a live production environment.</div>
+      <div style={{opacity:0.65}}>Prior roles at Lupin Ltd., Farmson Pharmaceuticals, and IHSS built the analytical and data management foundation.</div>
     </div>
   )},
   { icon: BookOpen, color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Education', body: (
     <>
       <div style={{marginBottom:'8px'}}>
-        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Bachelor of Applied Technology – GIS</div>
+        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Bachelor of Applied Technology \u2013 GIS</div>
         <div style={{opacity:0.7, fontSize:'0.75rem'}}>Southern Alberta Institute of Technology (SAIT), Calgary</div>
       </div>
       <div style={{marginBottom:'8px'}}>
-        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Master of Science – Environmental Science &amp; Technology</div>
+        <div style={{fontWeight:600, fontSize:'0.78rem', color:'var(--text)'}}>Master of Science \u2013 Environmental Science &amp; Technology</div>
         <div style={{opacity:0.7, fontSize:'0.75rem'}}>CVM University, India</div>
       </div>
       <div style={{opacity:0.65, fontSize:'0.75rem', marginTop:'6px'}}>Academic focus: spatial analysis, geodatabases, cartography, remote sensing, and geospatial automation.</div>
+      <div style={{marginTop:'10px', paddingTop:'8px', borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+        <div style={{fontWeight:600, fontSize:'0.72rem', color:'var(--text-3)', marginBottom:'6px', textTransform:'uppercase', letterSpacing:'0.05em'}}>In Progress</div>
+        <div style={{display:'flex', flexWrap:'wrap', gap:'6px'}}>
+          <span style={{fontSize:'0.72rem', padding:'2px 8px', borderRadius:'9999px', background:'rgba(124,58,237,0.12)', color:'#7c3aed', fontWeight:500, border:'1px solid rgba(124,58,237,0.2)'}}>FME Spatial Data Integration</span>
+        </div>
+      </div>
     </>
   )},
-  { icon: Users,    color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Leadership',              body: 'Vice-President of BGIS Club at SAIT — organizing Geospatial Industry Nights with Esri Canada, AltaLIS, Stantec, and more.' },
+  { icon: Users,    color: '#00A9E0', bg: 'var(--accent-2-light)', title: 'Leadership',              body: 'Vice-President of BGIS Club at SAIT \u2014 organizing Geospatial Industry Nights with Esri Canada, AltaLIS, Stantec, and more.' },
 ];
 
 export default function About() {
@@ -78,7 +86,7 @@ export default function About() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
-          {/* Left — cards */}
+          {/* Left \u2014 cards */}
           <div
             ref={leftRef}
             className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
@@ -103,7 +111,7 @@ export default function About() {
             ))}
           </div>
 
-          {/* Right — bio + stats */}
+          {/* Right \u2014 bio + stats */}
           <div ref={rightRef} className="flex-1 flex flex-col justify-between gap-6">
             <div className="space-y-4">
               <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
@@ -113,7 +121,7 @@ export default function About() {
                 My work focuses on spatial data analysis, geospatial data management, and GIS application development using tools such as ArcGIS Pro, Python (ArcPy), remote sensing, and web GIS technologies. I enjoy transforming complex geographic data into meaningful insights that support urban planning, environmental management, and emergency response.
               </p>
               <p className="text-sm sm:text-base leading-7" style={{ color: 'var(--text-2)' }}>
-                I am particularly interested in Municipal GIS, Environmental GIS, Infrastructure Mapping, and Geospatial Automation. My goal is to apply GIS technology to solve real-world challenges — from wildfire risk assessment and spatial crime analysis to urban infrastructure planning.
+                I am particularly interested in Municipal GIS, Environmental GIS, Infrastructure Mapping, and Geospatial Automation. My goal is to apply GIS technology to solve real-world challenges \u2014 from wildfire risk assessment and spatial crime analysis to urban infrastructure planning.
               </p>
             </div>
 
