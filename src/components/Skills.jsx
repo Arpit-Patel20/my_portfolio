@@ -5,82 +5,74 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const tools = [
-  { name: 'ArcGIS Pro', pct: 92, cat: 'GIS Software' },
-  { name: 'ArcMap', pct: 85, cat: 'GIS Software' },
-  { name: 'QGIS', pct: 88, cat: 'GIS Software' },
-  { name: 'HxMap', pct: 80, cat: 'GIS Software' },
-  { name: 'ArcGIS Online', pct: 85, cat: 'Web GIS' },
-  { name: 'ModelBuilder', pct: 90, cat: 'Automation' },
-  { name: 'Survey123 / Field Maps', pct: 88, cat: 'Field GIS' },
-  { name: 'Remote Sensing (RS)', pct: 78, cat: 'Remote Sensing' },
-  { name: 'ArcGIS Experience Builder', pct: 78, cat: 'Web GIS' },
-  { name: 'GNSS / GPS', pct: 80, cat: 'Field GIS' },
-  { name: 'GIS Programming', pct: 70, cat: 'Programming' },
-  { name: 'Cartography', pct: 88, cat: 'Cartography' },
-  { name: 'Data Capture & QA/QC', pct: 90, cat: 'Data Mgmt' },
-  { name: 'Enterprise & Web GIS', pct: 78, cat: 'Web GIS' },
+const skillGroups = [
+  {
+    id: 'production',
+    category: 'Production & Imagery',
+    color: 'var(--accent)',
+    bg: 'var(--accent-light)',
+    dot: '#0079C1',
+    skills: [
+      'HxMap', 'ArcGIS Pro', 'ArcMap',
+      'Orthomosaic QA/QC', 'Seamline Editing',
+      'Raw Data Review', 'Aerotriangulation Support',
+    ],
+  },
+  {
+    id: 'analysis',
+    category: 'Analysis & Automation',
+    color: '#7c3aed',
+    bg: 'rgba(124,58,237,0.12)',
+    dot: '#7c3aed',
+    skills: [
+      'Remote Sensing & Imagery', 'ModelBuilder',
+      'Python (ArcPy)', 'FME (Safe Software)',
+      'Spatial Statistics', 'NDVI & Raster Analysis',
+    ],
+  },
+  {
+    id: 'webfield',
+    category: 'Web & Field GIS',
+    color: '#00A9E0',
+    bg: 'var(--accent-2-light)',
+    dot: '#00A9E0',
+    skills: [
+      'ArcGIS Online', 'Experience Builder',
+      'Survey123 / Field Maps', 'GNSS / GPS',
+      'Enterprise GIS',
+    ],
+  },
+  {
+    id: 'data',
+    category: 'Data & Cartography',
+    color: '#0d7a6f',
+    bg: 'rgba(13,122,111,0.12)',
+    dot: '#0d7a6f',
+    skills: [
+      'QGIS', 'Spatial Data QA/QC',
+      'Cartography & Layout', 'Geodatabases',
+      'Metadata Management', 'Geospatial Documentation',
+    ],
+  },
 ];
 
 export default function Skills() {
   const sectionRef = useRef(null);
-  const leftRef = useRef(null);
-  const rightRef = useRef(null);
-  const barRefs = useRef([]);
+  const cardRefs = useRef([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(leftRef.current, { x: -56, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
-          scrollTrigger: { trigger: leftRef.current, start: 'top 82%' } });
-
-      gsap.fromTo(rightRef.current, { x: 56, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
-          scrollTrigger: { trigger: rightRef.current, start: 'top 82%' } });
-
-      barRefs.current.forEach((bar, i) => {
-        if (!bar) return;
-        gsap.fromTo(bar,
-          { scaleX: 0, transformOrigin: 'left center' },
-          { scaleX: 1, duration: 0.9, ease: 'power3.out', delay: i * 0.05,
-            scrollTrigger: { trigger: bar, start: 'top 90%' } });
+      cardRefs.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.fromTo(el,
+          { y: 36, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.75, ease: 'power3.out', delay: i * 0.08,
+            scrollTrigger: { trigger: el, start: 'top 85%' } }
+        );
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
-
-  const half = Math.ceil(tools.length / 2);
-
-  function BarItem({ tool, idx }) {
-    const catColors = {
-      'GIS Software': 'var(--accent)', 'Web GIS': 'var(--accent)',
-      'Remote Sensing': '#7c3aed', 'Automation': '#7c3aed',
-      'Programming': 'var(--accent-2)', 'Data Mgmt': 'var(--accent-2)',
-      'CAD': '#64748b', 'Cartography': '#64748b',
-      'Field GIS': 'var(--accent)',
-    };
-    const fillColor = catColors[tool.cat] || 'var(--accent)';
-
-    return (
-      <div className="space-y-1.5">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-2">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-xs sm:text-sm font-medium" style={{ color: 'var(--text)' }}>{tool.name}</span>
-            <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-medium"
-              style={{ background: 'var(--accent-light)', color: 'var(--accent)' }}>{tool.cat}</span>
-          </div>
-          <span className="text-[10px] sm:text-xs tabular-nums font-semibold" style={{ color: 'var(--text-3)' }}>{tool.pct}%</span>
-        </div>
-        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.08)' }}>
-          <div
-            ref={el => (barRefs.current[idx] = el)}
-            className="h-full rounded-full"
-            style={{ width: `${tool.pct}%`, background: `linear-gradient(90deg, ${fillColor}, ${fillColor}99)` }}
-          />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <section id="skills" ref={sectionRef} className="section">
@@ -89,13 +81,48 @@ export default function Skills() {
           <span className="eyebrow">Toolkit</span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mt-3" style={{ fontStyle: 'italic' }}>GIS Tools &amp; Skills</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <motion.div ref={leftRef} whileHover={{}} className="card p-5 sm:p-7 space-y-4 sm:space-y-5">
-            {tools.slice(0, half).map((t, i) => <BarItem key={t.name} tool={t} idx={i} />)}
-          </motion.div>
-          <motion.div ref={rightRef} whileHover={{}} className="card p-5 sm:p-7 space-y-4 sm:space-y-5">
-            {tools.slice(half).map((t, i) => <BarItem key={t.name} tool={t} idx={i + half} />)}
-          </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+          {skillGroups.map((group, i) => (
+            <motion.div
+              key={group.id}
+              ref={el => (cardRefs.current[i] = el)}
+              whileHover={{ y: -4, boxShadow: 'var(--glass-shadow-hover)' }}
+              className="card p-5 sm:p-6"
+              style={{ transition: 'none' }}
+            >
+              {/* Category header */}
+              <div className="flex items-center gap-2 mb-4">
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{ background: group.dot }}
+                />
+                <span
+                  className="text-xs sm:text-sm font-semibold tracking-wide uppercase"
+                  style={{ color: group.color, letterSpacing: '0.06em' }}
+                >
+                  {group.category}
+                </span>
+              </div>
+
+              {/* Skill chips */}
+              <div className="flex flex-wrap gap-2">
+                {group.skills.map(skill => (
+                  <span
+                    key={skill}
+                    className="text-[11px] sm:text-xs px-2.5 py-1 rounded-full font-medium"
+                    style={{
+                      background: group.bg,
+                      color: group.color,
+                      border: `1px solid ${group.dot}22`,
+                    }}
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
