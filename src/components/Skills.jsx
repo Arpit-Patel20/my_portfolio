@@ -75,7 +75,16 @@ export default function Skills() {
   }, []);
 
   return (
-    <section id="skills" ref={sectionRef} className="section">
+    <>
+      <style>{`
+        .skill-chip { transition: transform 0.15s ease, box-shadow 0.15s ease; cursor: default; }
+        .skill-chip:hover { transform: translateY(-2px) scale(1.07); }
+        .skill-chip-production:hover { box-shadow: 0 0 8px rgba(0,121,193,0.65), 0 0 18px rgba(0,121,193,0.25); }
+        .skill-chip-analysis:hover   { box-shadow: 0 0 8px rgba(124,58,237,0.65), 0 0 18px rgba(124,58,237,0.25); }
+        .skill-chip-webfield:hover   { box-shadow: 0 0 8px rgba(0,169,224,0.65), 0 0 18px rgba(0,169,224,0.25); }
+        .skill-chip-data:hover       { box-shadow: 0 0 8px rgba(13,122,111,0.65), 0 0 18px rgba(13,122,111,0.25); }
+      `}</style>
+      <section id="skills" ref={sectionRef} className="section">
       <div className="container-tight">
         <div className="text-center mb-10 md:mb-12 px-2">
           <span className="eyebrow">Toolkit</span>
@@ -110,7 +119,7 @@ export default function Skills() {
                 {group.skills.map(skill => (
                   <span
                     key={skill}
-                    className="text-[11px] sm:text-xs px-2.5 py-1 rounded-full font-medium"
+                    className={`skill-chip skill-chip-${group.id} text-[11px] sm:text-xs px-2.5 py-1 rounded-full font-medium`}
                     style={{
                       background: group.bg,
                       color: group.color,
@@ -126,5 +135,6 @@ export default function Skills() {
         </div>
       </div>
     </section>
+    </>
   );
 }
