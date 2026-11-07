@@ -15,9 +15,14 @@ export default function Navbar({ onNavigate }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState('');
+  const [scrollPct, setScrollPct] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 30);
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollPct(docH > 0 ? Math.min(100, (window.scrollY / docH) * 100) : 0);
+    };
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -29,7 +34,21 @@ export default function Navbar({ onNavigate }) {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-x-0 top-0 z-50"
     >
-      {/* Pill nav */}
+      <style>{`
+        @keyframes avail-pulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+          50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+        }
+      `}</style>
+
+      {/* Scroll progress bar */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, height: '2px',
+        width: scrollPct + '%',
+        background: 'linear-gradient(90deg, #0079C1, #00A9E0, #7c3aed)',
+        zIndex: 60, transition: 'width 0.08s linear', pointerEvents: 'none',
+      }} />
+
       <div className="container-tight pt-4">
         <div
           style={{
@@ -45,7 +64,6 @@ export default function Navbar({ onNavigate }) {
           }}
           className="relative flex items-center justify-between px-5 py-3"
         >
-          {/* Specular highlight line */}
           <div className="absolute inset-x-0 top-0 h-px rounded-t-2xl" style={{
             background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)'
           }} />
@@ -60,6 +78,14 @@ export default function Navbar({ onNavigate }) {
               </div>
             </div>
             <span className="font-semibold text-sm" style={{ color: 'var(--text)' }}>Arpit Patel</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <div style={{
+                width: '7px', height: '7px', borderRadius: '50%',
+                background: '#22c55e', flexShrink: 0,
+                animation: 'avail-pulse 2s ease-in-out infinite',
+              }} />
+              <span style={{ fontSize: '0.58rem', color: '#22c55e', fontWeight: 600, letterSpacing: '0.04em' }}>OPEN</span>
+            </div>
           </a>
 
           {/* Desktop links */}
@@ -98,8 +124,6 @@ export default function Navbar({ onNavigate }) {
                 )
             ))}
           </nav>
-
-
 
           {/* Mobile menu btn */}
           <motion.button
@@ -143,7 +167,6 @@ export default function Navbar({ onNavigate }) {
                 <span style={{ color: 'var(--text-4)' }}>→</span>
               </motion.a>
             ))}
-
           </motion.div>
         )}
       </AnimatePresence>
